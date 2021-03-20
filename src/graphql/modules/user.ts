@@ -1,4 +1,4 @@
-import { arg, extendType, objectType } from 'nexus';
+import { arg, extendType, nonNull, objectType } from 'nexus';
 
 export const User = objectType({
   name: 'User',
@@ -20,15 +20,16 @@ export const UserQueries = extendType({
     t.field('user', {
       type: 'User',
       args: {
-        userId: arg({
-          type: 'Int',
-          default: 0,
-          description: 'Id of user you are querying for',
-        }),
+        userId: nonNull(
+          arg({
+            type: 'Int',
+            description: 'Id of user you are querying for',
+          })
+        ),
       },
       description: 'Returns the user by id passed',
       resolve: (_root, _args, ctx) =>
-        ctx.db.user.findUnique({
+        ctx.db.user.findFirst({
           where: {
             id: _args.userId,
           },

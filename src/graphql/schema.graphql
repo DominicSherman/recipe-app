@@ -11,7 +11,7 @@ type Query {
     """
     Id of user you are querying for
     """
-    userId: Int = 0
+    userId: Int!
   ): User
 }
 

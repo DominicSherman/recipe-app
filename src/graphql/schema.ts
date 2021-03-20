@@ -29,5 +29,9 @@ export const schema = makeSchema({
     schema: path.join(__dirname, 'schema.graphql'),
     typegen: nexusTypegenDirectory,
   },
+  contextType: {
+    module: path.join(__dirname, './context.ts'),
+    export: 'Context',
+  },
   prettierConfig,
 });
