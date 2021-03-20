@@ -1,4 +1,4 @@
-import { getEnv } from './../env';
+import { getEnv } from 'env';
 import { PASSWORD_PROTECT } from 'enums/options';
 import { NextPageContext } from 'next';
 import nextCookie from 'next-cookies';
