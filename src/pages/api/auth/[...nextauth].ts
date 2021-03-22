@@ -14,24 +14,28 @@ export default NextAuth({
     }),
     // ...add more providers here
   ],
-  callbacks: {
-    async session(session, user) {
-      return {
-        ...session,
-        user: {
-          id: user.sub,
-          ...user,
-        },
-      };
-    },
-    async jwt(token, user, account) {
-      if (account?.accessToken) {
-        token.accessToken = account.accessToken;
-      }
+  // callbacks: {
+  //   async session(session, user) {
+  //     console.log('user', user);
 
-      return token;
-    },
-  },
+  //     return {
+  //       ...session,
+  //       user: {
+  //         id: user.sub,
+  //         ...user,
+  //       },
+  //     };
+  //   },
+  //   async jwt(token, user, account) {
+  //     console.log('account', account);
+
+  //     if (account?.accessToken) {
+  //       token.accessToken = account.accessToken;
+  //     }
+
+  //     return token;
+  //   },
+  // },
   secret: process.env.AUTH_SECRET,
   session: {
     jwt: true,
