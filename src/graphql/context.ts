@@ -1,4 +1,4 @@
-import { PrismaClient, User } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { Context as ApolloContext } from 'apollo-server-core';
 import { IncomingMessage } from 'http';
 import jwt from 'next-auth/jwt';

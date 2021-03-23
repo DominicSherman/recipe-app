@@ -1,6 +1,6 @@
 import 'css/global.css';
 
-import { GlobalStyles, Meta } from 'components';
+import { Meta } from 'components';
 import { Provider as NextAuthProvider } from 'next-auth/client';
 import { ApolloProvider } from '@apollo/client';
 import { createApolloClient } from '../lib/apolloClient';
@@ -13,9 +13,9 @@ function App({ Component, pageProps }) {
     <ApolloProvider client={apolloClient}>
       <NextAuthProvider session={pageProps.session}>
         <ToastProvider autoDismiss placement="bottom-center">
-          <GlobalStyles />
           <Meta />
           <Component {...pageProps} />
+          <div id="modal-root" />
         </ToastProvider>
       </NextAuthProvider>
     </ApolloProvider>

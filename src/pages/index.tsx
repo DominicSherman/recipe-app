@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { NavBar } from 'components';
+import { NavBar, Modal } from 'components';
 import * as Options from 'enums/options';
 import { useGetUserQuery } from '../../graphql-codegen';
 
@@ -33,10 +33,10 @@ export default function Home() {
   console.log('response', response);
 
   return (
-    <div className="w-screen h-screen flex flex-col">
+    <div className="w-screen h-screen flex flex-col bg-gray-800">
       <NavBar />
       <div className="h-screen flex flex-col justify-center items-center w-full">
-        <h1 tw="text-3xl font-semibold ml-7">{`Welcome to ${Options.APP_TITLE}`}</h1>
+        <h1 className="text-3xl text-white font-semibold ml-7">{`Welcome to ${Options.APP_TITLE}`}</h1>
       </div>
     </div>
   );

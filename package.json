@@ -22,8 +22,10 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.12",
+    "@headlessui/react": "^0.3.1",
     "@prisma/client": "2.18.0",
     "@tailwindcss/forms": "^0.2.1",
+    "@tailwindcss/jit": "^0.1.7",
     "apollo-server": "^2.21.2",
     "apollo-server-micro": "^2.21.2",
     "autoprefixer": "^10.2.5",
@@ -41,7 +43,6 @@
     "react-dom": "17.0.1",
     "react-hook-form": "^6.15.4",
     "react-toast-notifications": "^2.4.3",
-    "styled-components": "^5.2.1",
     "stylelint-config-recommended": "^4.0.0",
     "tailwindcss": "^2.0.3",
     "uuid": "^8.3.2"
@@ -61,7 +62,6 @@
     "babel-eslint": "^10.0.1",
     "babel-plugin-macros": "^3.0.1",
     "babel-plugin-styled-components": "^1.12.0",
-    "babel-plugin-twin": "^1.0.2",
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-config-react-app": "^5.0.2",
@@ -79,7 +79,6 @@
     "stylelint-config-sass-guidelines": "^8.0.0",
     "stylelint-order": "^4.1.0",
     "ts-node-dev": "^1.0.0",
-    "twin.macro": "^2.3.0",
     "typescript": "^4.2.3"
   }
 }

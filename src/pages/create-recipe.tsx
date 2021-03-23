@@ -1,10 +1,9 @@
 import { gql } from '@apollo/client';
 import { NavBar } from 'components';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useToasts } from 'react-toast-notifications';
-import tw from 'twin.macro';
 import { v4 } from 'uuid';
+
 import { useCreateOneRecipeMutation } from '../../graphql-codegen';
 
 export const CREATE_RECIPE_MUTATION = gql`
@@ -50,28 +49,29 @@ export default function CreateRecipe() {
       <NavBar />
       <div className="h-screen flex flex-col justify-center items-center w-full">
         <div>
-          <h2 tw="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Create Recipe
           </h2>
         </div>
-        <form onSubmit={onSubmit} tw="mt-8 space-y-6">
+        <form className="mt-8 space-y-6" onSubmit={onSubmit}>
           <input name="remember" type="hidden" value="true" />
-          <div tw="space-y-px">
+          <div className="space-y-px">
             <input
               autoComplete="current-password"
-              css={errors['password'] ? tw`border-red-500` : ''}
+              className={`appearance-none rounded-md relative block w-full px-3 py-2 placeholder-gray-500 text-gray-900 sm:text-sm shadow-lg border focus:border-gray-600 outline-none ${
+                errors['title'] ? 'border-red-500' : ''
+              }`}
               id="title"
               name="title"
               placeholder="Recipe Title"
               ref={register({ required: true })}
-              tw="appearance-none rounded-md relative block w-full px-3 py-2 placeholder-gray-500 text-gray-900 sm:text-sm shadow-lg border focus:border-gray-600 outline-none"
             />
           </div>
           <div>
             <button
-              className="group btn"
-              css={loading ? tw`opacity-70` : ''}
-              tw="relative w-full flex justify-center py-2 px-4"
+              className={`group btn relative w-full flex justify-center py-2 px-4 ${
+                loading ? 'opacity-70' : 'opacity-100'
+              }`}
               type="submit"
             >
               Log in
