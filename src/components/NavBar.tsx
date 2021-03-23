@@ -5,8 +5,6 @@ import * as Options from 'enums/options';
 export const NavBar = () => {
   const [session] = useSession();
 
-  console.log('session', session);
-
   return (
     <div className="top-0 sticky w-full flex flex-row justify-center">
       <div className="container flex w-maxflex-row justify-between content-center w-full px-16 py-4">

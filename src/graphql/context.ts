@@ -18,25 +18,19 @@ export async function createContext(
     secret: process.env.JWT_SECRET,
   });
 
-  let user: User | null = null;
-
-  if (token) {
-    user = await prisma.user.findUnique({
-      where: { id: Number(token.userId) },
-    });
-  }
-
   return {
     db: prisma,
     prisma,
-    user,
+    token,
   };
 }
 
 type ApolloApiContext = ApolloContext<{ req: IncomingMessage }>;
 
+interface Token {}
+
 export type Context = {
   db: PrismaClient;
   prisma: PrismaClient;
-  user: User | null;
+  token: Token;
 };

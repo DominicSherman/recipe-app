@@ -7,12 +7,7 @@ import prettierConfig from '../../.prettierrc.js';
 
 import * as types from './modules';
 
-const nexusTypegenDirectory = path.join(
-  process.cwd(),
-  '..',
-  '..',
-  'node_modules/@types/nexus-typegen/index.d.ts'
-);
+const currentDirectory = process.cwd();
 
 export const schema = makeSchema({
   types,
@@ -21,13 +16,19 @@ export const schema = makeSchema({
     nexusPrisma({
       experimentalCRUD: true,
       outputs: {
-        typegen: nexusTypegenDirectory,
+        typegen: path.join(
+          currentDirectory,
+          'node_modules/@types/typegen-nexus-plugin-prisma/index.d.ts'
+        ),
       },
     }),
   ],
   outputs: {
-    schema: path.join(__dirname, 'schema.graphql'),
-    typegen: nexusTypegenDirectory,
+    schema: path.join(currentDirectory, 'schema.graphql'),
+    typegen: path.join(
+      currentDirectory,
+      'node_modules/@types/nexus-typegen/index.d.ts'
+    ),
   },
   contextType: {
     module: path.join(__dirname, './context.ts'),
