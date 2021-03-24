@@ -3,8 +3,25 @@
 
 scalar DateTime
 
+input DateTimeFieldUpdateOperationsInput {
+  set: DateTime
+}
+
 type Mutation {
   createOneRecipe(data: RecipeCreateInput!): Recipe!
+  deleteOneRecipe(where: RecipeWhereUniqueInput!): Recipe
+  updateOneRecipe(
+    data: RecipeUpdateInput!
+    where: RecipeWhereUniqueInput!
+  ): Recipe
+}
+
+input NullableDateTimeFieldUpdateOperationsInput {
+  set: DateTime
+}
+
+input NullableStringFieldUpdateOperationsInput {
+  set: String
 }
 
 type Query {
@@ -44,8 +61,20 @@ input RecipeCreateInput {
   user: UserCreateNestedOneWithoutRecipesInput!
 }
 
+input RecipeUpdateInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  user: UserUpdateOneRequiredWithoutRecipesInput
+}
+
 input RecipeWhereUniqueInput {
   id: String
+}
+
+input StringFieldUpdateOperationsInput {
+  set: String
 }
 
 """
@@ -79,6 +108,28 @@ input UserCreateWithoutRecipesInput {
   image: String
   name: String
   updatedAt: DateTime
+}
+
+input UserUpdateOneRequiredWithoutRecipesInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutRecipesInput
+  create: UserCreateWithoutRecipesInput
+  update: UserUpdateWithoutRecipesInput
+  upsert: UserUpsertWithoutRecipesInput
+}
+
+input UserUpdateWithoutRecipesInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  email: NullableStringFieldUpdateOperationsInput
+  emailVerified: NullableDateTimeFieldUpdateOperationsInput
+  image: NullableStringFieldUpdateOperationsInput
+  name: NullableStringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input UserUpsertWithoutRecipesInput {
+  create: UserCreateWithoutRecipesInput!
+  update: UserUpdateWithoutRecipesInput!
 }
 
 input UserWhereUniqueInput {

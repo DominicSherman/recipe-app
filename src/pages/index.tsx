@@ -1,7 +1,8 @@
 import { gql } from '@apollo/client';
-import { NavBar, Modal } from 'components';
-import * as Options from 'enums/options';
-import { useGetUserQuery } from '../../graphql-codegen';
+import { CreateRecipeButton, NavBar } from 'components';
+import Link from 'next/link';
+
+import { Recipe, useGetUserQuery } from '../../graphql-codegen';
 
 export const CREATE_RECIPE_MUTATION = gql`
   query getUser($where: UserWhereUniqueInput!) {
@@ -19,10 +20,16 @@ export const CREATE_RECIPE_MUTATION = gql`
       title
     }
   }
+
+  mutation deleteOneRecipe($where: RecipeWhereUniqueInput!) {
+    deleteOneRecipe(where: $where) {
+      id
+    }
+  }
 `;
 
 export default function Home() {
-  const response = useGetUserQuery({
+  const { data } = useGetUserQuery({
     variables: {
       where: {
         id: 1,
@@ -30,14 +37,35 @@ export default function Home() {
     },
   });
 
-  console.log('response', response);
-
   return (
-    <div className="w-screen h-screen flex flex-col bg-gray-800">
+    <div className="w-screen h-screen flex flex-col bg-primary">
       <NavBar />
+      <div className="w-full">
+        <div className="max-w-7xl w-full mx-auto py-4">
+          <CreateRecipeButton />
+        </div>
+      </div>
       <div className="h-screen flex flex-col justify-center items-center w-full">
-        <h1 className="text-3xl text-white font-semibold ml-7">{`Welcome to ${Options.APP_TITLE}`}</h1>
+        {data?.recipes.map((recipe) => (
+          <RecipeItem recipe={recipe} />
+        ))}
       </div>
     </div>
   );
 }
+
+const RecipeItem = ({
+  recipe,
+}: {
+  recipe: { __typename?: 'Recipe' } & Pick<Recipe, 'id' | 'title'>;
+}) => {
+  return (
+    <div className="w-96 flex flex-row justify-between">
+      <Link href={`recipes/${recipe.id}`}>
+        <a className="text-2xl text-white font-semibold ml-7" href="#">
+          {recipe.title}
+        </a>
+      </Link>
+    </div>
+  );
+};

@@ -21,8 +21,6 @@ export const Modal = ({ isOpen, setIsOpen, children }) => {
     };
 
     const handleClickOutside = (event): void => {
-      console.log('mainRef.current', mainRef.current);
-
       if (mainRef.current && !mainRef.current.contains(event.target)) {
         closeModal();
       }
@@ -83,7 +81,7 @@ export const Modal = ({ isOpen, setIsOpen, children }) => {
           leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           show={isOpen}
         >
-          <div ref={mainRef}>{children}</div>
+          <div ref={mainRef}>{isOpen ? children : null}</div>
         </Transition>
       </div>
     </div>

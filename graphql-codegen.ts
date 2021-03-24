@@ -14,14 +14,39 @@ export type Scalars = {
 };
 
 
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Maybe<Scalars['DateTime']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createOneRecipe: Recipe;
+  deleteOneRecipe?: Maybe<Recipe>;
+  updateOneRecipe?: Maybe<Recipe>;
 };
 
 
 export type MutationCreateOneRecipeArgs = {
   data: RecipeCreateInput;
+};
+
+
+export type MutationDeleteOneRecipeArgs = {
+  where: RecipeWhereUniqueInput;
+};
+
+
+export type MutationUpdateOneRecipeArgs = {
+  data: RecipeUpdateInput;
+  where: RecipeWhereUniqueInput;
+};
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Maybe<Scalars['DateTime']>;
+};
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: Maybe<Scalars['String']>;
 };
 
 export type Query = {
@@ -77,8 +102,20 @@ export type RecipeCreateInput = {
   user: UserCreateNestedOneWithoutRecipesInput;
 };
 
+export type RecipeUpdateInput = {
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  id?: Maybe<StringFieldUpdateOperationsInput>;
+  title?: Maybe<StringFieldUpdateOperationsInput>;
+  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutRecipesInput>;
+};
+
 export type RecipeWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
+};
+
+export type StringFieldUpdateOperationsInput = {
+  set?: Maybe<Scalars['String']>;
 };
 
 /** A User */
@@ -113,6 +150,28 @@ export type UserCreateWithoutRecipesInput = {
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
+export type UserUpdateOneRequiredWithoutRecipesInput = {
+  connect?: Maybe<UserWhereUniqueInput>;
+  connectOrCreate?: Maybe<UserCreateOrConnectWithoutRecipesInput>;
+  create?: Maybe<UserCreateWithoutRecipesInput>;
+  update?: Maybe<UserUpdateWithoutRecipesInput>;
+  upsert?: Maybe<UserUpsertWithoutRecipesInput>;
+};
+
+export type UserUpdateWithoutRecipesInput = {
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  email?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  emailVerified?: Maybe<NullableDateTimeFieldUpdateOperationsInput>;
+  image?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  name?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type UserUpsertWithoutRecipesInput = {
+  create: UserCreateWithoutRecipesInput;
+  update: UserUpdateWithoutRecipesInput;
+};
+
 export type UserWhereUniqueInput = {
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
@@ -142,6 +201,32 @@ export type GetUserQuery = (
     { __typename?: 'User' }
     & Pick<User, 'createdAt' | 'email' | 'emailVerified' | 'id' | 'image' | 'name' | 'updatedAt'>
   )>, recipes: Array<(
+    { __typename?: 'Recipe' }
+    & Pick<Recipe, 'id' | 'title'>
+  )> }
+);
+
+export type DeleteOneRecipeMutationVariables = Exact<{
+  where: RecipeWhereUniqueInput;
+}>;
+
+
+export type DeleteOneRecipeMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteOneRecipe?: Maybe<(
+    { __typename?: 'Recipe' }
+    & Pick<Recipe, 'id'>
+  )> }
+);
+
+export type GetRecipeQueryVariables = Exact<{
+  where: RecipeWhereUniqueInput;
+}>;
+
+
+export type GetRecipeQuery = (
+  { __typename?: 'Query' }
+  & { recipe?: Maybe<(
     { __typename?: 'Recipe' }
     & Pick<Recipe, 'id' | 'title'>
   )> }
@@ -223,3 +308,69 @@ export function useGetUserLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHook
 export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
 export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
 export type GetUserQueryResult = ApolloReactCommon.QueryResult<GetUserQuery, GetUserQueryVariables>;
+export const DeleteOneRecipeDocument = gql`
+    mutation deleteOneRecipe($where: RecipeWhereUniqueInput!) {
+  deleteOneRecipe(where: $where) {
+    id
+  }
+}
+    `;
+export type DeleteOneRecipeMutationFn = ApolloReactCommon.MutationFunction<DeleteOneRecipeMutation, DeleteOneRecipeMutationVariables>;
+
+/**
+ * __useDeleteOneRecipeMutation__
+ *
+ * To run a mutation, you first call `useDeleteOneRecipeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteOneRecipeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteOneRecipeMutation, { data, loading, error }] = useDeleteOneRecipeMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useDeleteOneRecipeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteOneRecipeMutation, DeleteOneRecipeMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteOneRecipeMutation, DeleteOneRecipeMutationVariables>(DeleteOneRecipeDocument, baseOptions);
+      }
+export type DeleteOneRecipeMutationHookResult = ReturnType<typeof useDeleteOneRecipeMutation>;
+export type DeleteOneRecipeMutationResult = ApolloReactCommon.MutationResult<DeleteOneRecipeMutation>;
+export type DeleteOneRecipeMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteOneRecipeMutation, DeleteOneRecipeMutationVariables>;
+export const GetRecipeDocument = gql`
+    query getRecipe($where: RecipeWhereUniqueInput!) {
+  recipe(where: $where) {
+    id
+    title
+  }
+}
+    `;
+
+/**
+ * __useGetRecipeQuery__
+ *
+ * To run a query within a React component, call `useGetRecipeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRecipeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRecipeQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGetRecipeQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetRecipeQuery, GetRecipeQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetRecipeQuery, GetRecipeQueryVariables>(GetRecipeDocument, baseOptions);
+      }
+export function useGetRecipeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetRecipeQuery, GetRecipeQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetRecipeQuery, GetRecipeQueryVariables>(GetRecipeDocument, baseOptions);
+        }
+export type GetRecipeQueryHookResult = ReturnType<typeof useGetRecipeQuery>;
+export type GetRecipeLazyQueryHookResult = ReturnType<typeof useGetRecipeLazyQuery>;
+export type GetRecipeQueryResult = ApolloReactCommon.QueryResult<GetRecipeQuery, GetRecipeQueryVariables>;

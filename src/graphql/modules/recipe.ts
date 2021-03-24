@@ -21,9 +21,11 @@ export const recipeQueries = extendType({
   },
 });
 
-export const mutations = extendType({
+export const recipeMutations = extendType({
   type: 'Mutation',
   definition(t) {
     t.crud.createOneRecipe();
+    t.crud.updateOneRecipe();
+    t.crud.deleteOneRecipe();
   },
 });

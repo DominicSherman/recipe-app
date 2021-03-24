@@ -27,10 +27,10 @@ export async function createContext(
 
 type ApolloApiContext = ApolloContext<{ req: IncomingMessage }>;
 
-interface Token {}
+// interface Token {}
 
 export type Context = {
   db: PrismaClient;
   prisma: PrismaClient;
-  token: Token;
+  token: any;
 };
