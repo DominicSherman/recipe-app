@@ -6,6 +6,8 @@ import React from 'react';
 export const NavBar = () => {
   const [session] = useSession();
 
+  console.log('session', session);
+
   return (
     <div>
       <nav className="bg-secondary">
@@ -47,7 +49,7 @@ const DesktopNav = ({ session }) => (
                   className={`h-8 w-8 rounded-full ${
                     !session?.user?.image ? 'bg-gray-400' : ''
                   }`}
-                  src={session?.user?.image}
+                  src={session?.user?.picture}
                 />
               </button>
             </div>

@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useToasts } from 'react-toast-notifications';
 import { v4 } from 'uuid';
+import { useSession } from 'next-auth/client';
 
 import { useCreateOneRecipeMutation } from '../../graphql-codegen';
 import { Modal } from './Modal';
@@ -20,6 +21,8 @@ export const CreateRecipeModal = ({ isOpen, setIsOpen }) => {
   const router = useRouter();
   const { register, handleSubmit, errors, reset } = useForm();
   const { addToast } = useToasts();
+  const [session] = useSession();
+  const userId = session?.user?.id || '';
 
   const [createRecipe, { loading }] = useCreateOneRecipeMutation({
     onCompleted: (data) => {
@@ -40,7 +43,7 @@ export const CreateRecipeModal = ({ isOpen, setIsOpen }) => {
           title: data.title,
           user: {
             connect: {
-              id: 1,
+              id: Number(userId),
             },
           },
         },

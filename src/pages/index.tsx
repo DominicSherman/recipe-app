@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client';
 import { CreateRecipeButton, NavBar } from 'components';
 import Link from 'next/link';
+import { useSession } from 'next-auth/client';
 
 import { Recipe, useGetUserQuery } from '../../graphql-codegen';
 
@@ -29,10 +30,14 @@ export const CREATE_RECIPE_MUTATION = gql`
 `;
 
 export default function Home() {
+  const [session] = useSession();
+  const userId = session?.user?.id;
+
   const { data } = useGetUserQuery({
+    skip: !userId,
     variables: {
       where: {
-        id: 1,
+        id: Number(userId),
       },
     },
   });
