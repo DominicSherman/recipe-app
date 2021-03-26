@@ -13,6 +13,7 @@
     "db:migrate": "prisma migrate dev && yarn build:prisma",
     "db:reset": "prisma migrate reset",
     "db:setup": "yarn db:migrate && yarn prisma generate",
+    "db:studio": "prisma studio",
     "dev": "next dev",
     "lint": "yarn lint:js && yarn lint:css",
     "lint:css": "stylelint '**/*.css'",
