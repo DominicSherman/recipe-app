@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "yarn build:dev && next build",
+    "build": "yarn build:dev && yarn db:deploy && next build",
     "build:prisma": "prisma generate",
     "build:nexus": "NODE_ENV=development ts-node -P tsconfig.nexus.json --transpile-only src/graphql/schema.ts",
     "build:codegen": "graphql-codegen --config codegen.yml",
