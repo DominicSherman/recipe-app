@@ -1,5 +1,5 @@
 import * as Options from 'enums/options';
-import { useSession } from 'next-auth/client';
+import { useSession, signOut, signIn } from 'next-auth/client';
 import Link from 'next/link';
 import React from 'react';
 
@@ -30,7 +30,9 @@ const DesktopNav = ({ session }) => (
       </div>
       <div className="hidden md:block">
         <div className="ml-4 flex items-center md:ml-6">
-          <button className="btn">Logout</button>
+          <button className="btn" onClick={session ? signOut : signIn}>
+            {session ? 'Logout' : 'Login'}
+          </button>
           <div className="ml-3 relative">
             <div>
               <button
