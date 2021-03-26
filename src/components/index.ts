@@ -1,3 +1,4 @@
 export * from './NavBar';
-export * from './GlobalStyles';
 export * from './Meta';
+export * from './Modal';
+export * from './CreateRecipeButton';

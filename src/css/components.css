@@ -1,1 +1,5 @@
 @import './components/buttons.css';
+
+.key {
+  @apply bg-gray-500 ml-2 rounded-md py-0.5 px-2 text-sm shadow-lg border border-gray-600;
+}

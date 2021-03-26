@@ -1,4 +1,4 @@
-import { arg, extendType, nonNull, objectType } from 'nexus';
+import { extendType, objectType } from 'nexus';
 
 export const User = objectType({
   name: 'User',
@@ -14,26 +14,10 @@ export const User = objectType({
   },
 });
 
-export const UserQueries = extendType({
+export const userQueries = extendType({
   type: 'Query',
-  definition: (t) => {
-    t.field('user', {
-      type: 'User',
-      args: {
-        userId: nonNull(
-          arg({
-            type: 'Int',
-            description: 'Id of user you are querying for',
-          })
-        ),
-      },
-      description: 'Returns the user by id passed',
-      resolve: (_root, _args, ctx) =>
-        ctx.db.user.findFirst({
-          where: {
-            id: _args.userId,
-          },
-        }),
-    });
+  definition(t) {
+    t.crud.user();
+    t.crud.users();
   },
 });

@@ -13,7 +13,6 @@ Our other branch is `production`, which deploys to production on merge. In order
 * [NextJS](https://nextjs.org/)
 * [Vercel](https://vercel.com/)
 * [Tailwind](https://styled-system.com/getting-started/)
-* [twin.macro](https://github.com/ben-rogerson/twin.macro)
 * [Styled Components](https://styled-components.com/)
 * [TypeScript](https://www.typescriptlang.org/)
 * [ESlint](https://eslint.org/)

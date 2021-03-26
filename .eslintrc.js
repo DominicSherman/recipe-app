@@ -16,6 +16,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'jsx-a11y/accessible-emoji': 0,
+    'jsx-a11y/anchor-is-valid': 0,
     'jsx-a11y/no-onchange': 'off',
     'padding-line-between-statements': [
       'error',
@@ -34,6 +35,7 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react/jsx-sort-props': 'error',
     'react/react-in-jsx-scope': 0,
+    'react/jsx-no-undef': 0,
   },
   settings: {
     'import/resolver': {
