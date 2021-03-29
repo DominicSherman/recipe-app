@@ -1,13 +1,15 @@
 import { gql } from '@apollo/client';
 import { CreateRecipeButton, NavBar } from 'components';
 import Link from 'next/link';
-import { useSession } from 'next-auth/client';
-
-import { Recipe, useGetUserQuery } from '../../graphql-codegen';
+import { useUserId } from 'utils';
+import { Recipe, useGetUserAndRecipesQuery } from 'graphql-codegen';
 
 export const CREATE_RECIPE_MUTATION = gql`
-  query getUser($where: UserWhereUniqueInput!) {
-    user(where: $where) {
+  query getUserAndRecipes(
+    $whereUser: UserWhereUniqueInput!
+    $whereRecipes: RecipeWhereInput!
+  ) {
+    user(where: $whereUser) {
       createdAt
       email
       emailVerified
@@ -16,7 +18,7 @@ export const CREATE_RECIPE_MUTATION = gql`
       name
       updatedAt
     }
-    recipes {
+    recipes(where: $whereRecipes) {
       id
       title
     }
@@ -30,13 +32,17 @@ export const CREATE_RECIPE_MUTATION = gql`
 `;
 
 export default function Home() {
-  const [session] = useSession();
-  const userId = session?.user?.id;
+  const userId = useUserId();
 
-  const { data } = useGetUserQuery({
+  const { data } = useGetUserAndRecipesQuery({
     skip: !userId,
     variables: {
-      where: {
+      whereRecipes: {
+        userId: {
+          equals: Number(userId),
+        },
+      },
+      whereUser: {
         id: Number(userId),
       },
     },

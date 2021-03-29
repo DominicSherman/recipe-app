@@ -7,6 +7,39 @@ input DateTimeFieldUpdateOperationsInput {
   set: DateTime
 }
 
+input DateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeFilter
+  notIn: [DateTime!]
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeNullableFilter
+  notIn: [DateTime!]
+}
+
+input IntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntFilter
+  notIn: [Int!]
+}
+
 type Mutation {
   createOneRecipe(data: RecipeCreateInput!): Recipe!
   deleteOneRecipe(where: RecipeWhereUniqueInput!): Recipe
@@ -14,6 +47,67 @@ type Mutation {
     data: RecipeUpdateInput!
     where: RecipeWhereUniqueInput!
   ): Recipe
+}
+
+input NestedDateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeFilter
+  notIn: [DateTime!]
+}
+
+input NestedDateTimeNullableFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeNullableFilter
+  notIn: [DateTime!]
+}
+
+input NestedIntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntFilter
+  notIn: [Int!]
+}
+
+input NestedStringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input NestedStringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
 }
 
 input NullableDateTimeFieldUpdateOperationsInput {
@@ -31,6 +125,7 @@ type Query {
     before: RecipeWhereUniqueInput
     first: Int
     last: Int
+    where: RecipeWhereInput
   ): [Recipe!]!
   user(where: UserWhereUniqueInput!): User
   users(
@@ -39,6 +134,11 @@ type Query {
     first: Int
     last: Int
   ): [User!]!
+}
+
+enum QueryMode {
+  default
+  insensitive
 }
 
 """
@@ -61,6 +161,12 @@ input RecipeCreateInput {
   user: UserCreateNestedOneWithoutRecipesInput!
 }
 
+input RecipeListRelationFilter {
+  every: RecipeWhereInput
+  none: RecipeWhereInput
+  some: RecipeWhereInput
+}
+
 input RecipeUpdateInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
@@ -69,12 +175,54 @@ input RecipeUpdateInput {
   user: UserUpdateOneRequiredWithoutRecipesInput
 }
 
+input RecipeWhereInput {
+  AND: [RecipeWhereInput!]
+  NOT: [RecipeWhereInput!]
+  OR: [RecipeWhereInput!]
+  createdAt: DateTimeFilter
+  id: StringFilter
+  title: StringFilter
+  updatedAt: DateTimeFilter
+  user: UserWhereInput
+  userId: IntFilter
+}
+
 input RecipeWhereUniqueInput {
   id: String
 }
 
 input StringFieldUpdateOperationsInput {
   set: String
+}
+
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
 }
 
 """
@@ -130,6 +278,20 @@ input UserUpdateWithoutRecipesInput {
 input UserUpsertWithoutRecipesInput {
   create: UserCreateWithoutRecipesInput!
   update: UserUpdateWithoutRecipesInput!
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  Recipes: RecipeListRelationFilter
+  createdAt: DateTimeFilter
+  email: StringNullableFilter
+  emailVerified: DateTimeNullableFilter
+  id: IntFilter
+  image: StringNullableFilter
+  name: StringNullableFilter
+  updatedAt: DateTimeFilter
 }
 
 input UserWhereUniqueInput {

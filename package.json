@@ -14,12 +14,15 @@
     "db:reset": "prisma migrate reset",
     "db:setup": "yarn db:migrate && yarn prisma generate",
     "db:studio": "prisma studio",
-    "dev": "next dev",
+    "dev": "concurrently -n \"Watchers,Next\" -c \"black.bgYellow.dim,black.bgCyan.dim\" \"yarn watch:all\" \"next dev\"",
     "lint": "yarn lint:js && yarn lint:css",
     "lint:css": "stylelint '**/*.css'",
     "lint:js": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "start": "next start",
-    "ts:check": "tsc"
+    "ts:check": "tsc",
+    "watch:codegen": "yarn build:codegen --watch",
+    "watch:nexus": "ts-node-dev -P tsconfig.nexus.json --transpile-only --respawn --watch src/graphql/schema.ts,src/prisma/schema.prisma src/graphql/schema.ts",
+    "watch:all": "concurrently -n \"Nexus,Codegen\" -c \"black.bgGreen.dim,black.bgBlue.dim\" \"yarn watch:nexus\" \"yarn watch:codegen\""
   },
   "dependencies": {
     "@apollo/client": "^3.3.12",
@@ -63,6 +66,7 @@
     "babel-eslint": "^10.0.1",
     "babel-plugin-macros": "^3.0.1",
     "babel-plugin-styled-components": "^1.12.0",
+    "concurrently": "^6.0.0",
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-config-react-app": "^5.0.2",
