@@ -6,8 +6,6 @@ import React from 'react';
 export const NavBar = () => {
   const [session] = useSession();
 
-  console.log('session', session);
-
   return (
     <div>
       <nav className="bg-secondary">
@@ -35,25 +33,27 @@ const DesktopNav = ({ session }) => (
           <button className="btn" onClick={session ? signOut : signIn}>
             {session ? 'Logout' : 'Login'}
           </button>
-          <div className="ml-3 relative">
-            <div>
-              <button
-                aria-expanded="false"
-                aria-haspopup="true"
-                className="max-w-xs rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                id="user-menu"
-                type="button"
-              >
-                <img
-                  alt=""
-                  className={`h-8 w-8 rounded-full ${
-                    !session?.user?.image ? 'bg-gray-400' : ''
-                  }`}
-                  src={session?.user?.picture}
-                />
-              </button>
+          {session ? (
+            <div className="ml-3 relative">
+              <div>
+                <button
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  className="max-w-xs rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                  id="user-menu"
+                  type="button"
+                >
+                  <img
+                    alt=""
+                    className={`h-8 w-8 rounded-full ${
+                      !session?.user?.image ? 'bg-gray-400' : ''
+                    }`}
+                    src={session?.user?.picture}
+                  />
+                </button>
+              </div>
             </div>
-          </div>
+          ) : null}
         </div>
       </div>
     </div>

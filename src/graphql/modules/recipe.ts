@@ -17,7 +17,9 @@ export const recipeQueries = extendType({
   type: 'Query',
   definition(t) {
     t.crud.recipe();
-    t.crud.recipes();
+    t.crud.recipes({
+      filtering: true,
+    });
   },
 });
 

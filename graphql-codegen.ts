@@ -18,6 +18,39 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Maybe<Scalars['DateTime']>;
 };
 
+export type DateTimeFilter = {
+  equals?: Maybe<Scalars['DateTime']>;
+  gt?: Maybe<Scalars['DateTime']>;
+  gte?: Maybe<Scalars['DateTime']>;
+  in?: Maybe<Array<Scalars['DateTime']>>;
+  lt?: Maybe<Scalars['DateTime']>;
+  lte?: Maybe<Scalars['DateTime']>;
+  not?: Maybe<NestedDateTimeFilter>;
+  notIn?: Maybe<Array<Scalars['DateTime']>>;
+};
+
+export type DateTimeNullableFilter = {
+  equals?: Maybe<Scalars['DateTime']>;
+  gt?: Maybe<Scalars['DateTime']>;
+  gte?: Maybe<Scalars['DateTime']>;
+  in?: Maybe<Array<Scalars['DateTime']>>;
+  lt?: Maybe<Scalars['DateTime']>;
+  lte?: Maybe<Scalars['DateTime']>;
+  not?: Maybe<NestedDateTimeNullableFilter>;
+  notIn?: Maybe<Array<Scalars['DateTime']>>;
+};
+
+export type IntFilter = {
+  equals?: Maybe<Scalars['Int']>;
+  gt?: Maybe<Scalars['Int']>;
+  gte?: Maybe<Scalars['Int']>;
+  in?: Maybe<Array<Scalars['Int']>>;
+  lt?: Maybe<Scalars['Int']>;
+  lte?: Maybe<Scalars['Int']>;
+  not?: Maybe<NestedIntFilter>;
+  notIn?: Maybe<Array<Scalars['Int']>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createOneRecipe: Recipe;
@@ -39,6 +72,67 @@ export type MutationDeleteOneRecipeArgs = {
 export type MutationUpdateOneRecipeArgs = {
   data: RecipeUpdateInput;
   where: RecipeWhereUniqueInput;
+};
+
+export type NestedDateTimeFilter = {
+  equals?: Maybe<Scalars['DateTime']>;
+  gt?: Maybe<Scalars['DateTime']>;
+  gte?: Maybe<Scalars['DateTime']>;
+  in?: Maybe<Array<Scalars['DateTime']>>;
+  lt?: Maybe<Scalars['DateTime']>;
+  lte?: Maybe<Scalars['DateTime']>;
+  not?: Maybe<NestedDateTimeFilter>;
+  notIn?: Maybe<Array<Scalars['DateTime']>>;
+};
+
+export type NestedDateTimeNullableFilter = {
+  equals?: Maybe<Scalars['DateTime']>;
+  gt?: Maybe<Scalars['DateTime']>;
+  gte?: Maybe<Scalars['DateTime']>;
+  in?: Maybe<Array<Scalars['DateTime']>>;
+  lt?: Maybe<Scalars['DateTime']>;
+  lte?: Maybe<Scalars['DateTime']>;
+  not?: Maybe<NestedDateTimeNullableFilter>;
+  notIn?: Maybe<Array<Scalars['DateTime']>>;
+};
+
+export type NestedIntFilter = {
+  equals?: Maybe<Scalars['Int']>;
+  gt?: Maybe<Scalars['Int']>;
+  gte?: Maybe<Scalars['Int']>;
+  in?: Maybe<Array<Scalars['Int']>>;
+  lt?: Maybe<Scalars['Int']>;
+  lte?: Maybe<Scalars['Int']>;
+  not?: Maybe<NestedIntFilter>;
+  notIn?: Maybe<Array<Scalars['Int']>>;
+};
+
+export type NestedStringFilter = {
+  contains?: Maybe<Scalars['String']>;
+  endsWith?: Maybe<Scalars['String']>;
+  equals?: Maybe<Scalars['String']>;
+  gt?: Maybe<Scalars['String']>;
+  gte?: Maybe<Scalars['String']>;
+  in?: Maybe<Array<Scalars['String']>>;
+  lt?: Maybe<Scalars['String']>;
+  lte?: Maybe<Scalars['String']>;
+  not?: Maybe<NestedStringFilter>;
+  notIn?: Maybe<Array<Scalars['String']>>;
+  startsWith?: Maybe<Scalars['String']>;
+};
+
+export type NestedStringNullableFilter = {
+  contains?: Maybe<Scalars['String']>;
+  endsWith?: Maybe<Scalars['String']>;
+  equals?: Maybe<Scalars['String']>;
+  gt?: Maybe<Scalars['String']>;
+  gte?: Maybe<Scalars['String']>;
+  in?: Maybe<Array<Scalars['String']>>;
+  lt?: Maybe<Scalars['String']>;
+  lte?: Maybe<Scalars['String']>;
+  not?: Maybe<NestedStringNullableFilter>;
+  notIn?: Maybe<Array<Scalars['String']>>;
+  startsWith?: Maybe<Scalars['String']>;
 };
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -68,6 +162,7 @@ export type QueryRecipesArgs = {
   before?: Maybe<RecipeWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
+  where?: Maybe<RecipeWhereInput>;
 };
 
 
@@ -82,6 +177,11 @@ export type QueryUsersArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
 };
+
+export enum QueryMode {
+  DEFAULT = 'default',
+  INSENSITIVE = 'insensitive'
+}
 
 /** A Recipe */
 export type Recipe = {
@@ -102,6 +202,12 @@ export type RecipeCreateInput = {
   user: UserCreateNestedOneWithoutRecipesInput;
 };
 
+export type RecipeListRelationFilter = {
+  every?: Maybe<RecipeWhereInput>;
+  none?: Maybe<RecipeWhereInput>;
+  some?: Maybe<RecipeWhereInput>;
+};
+
 export type RecipeUpdateInput = {
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   id?: Maybe<StringFieldUpdateOperationsInput>;
@@ -110,12 +216,54 @@ export type RecipeUpdateInput = {
   user?: Maybe<UserUpdateOneRequiredWithoutRecipesInput>;
 };
 
+export type RecipeWhereInput = {
+  AND?: Maybe<Array<RecipeWhereInput>>;
+  NOT?: Maybe<Array<RecipeWhereInput>>;
+  OR?: Maybe<Array<RecipeWhereInput>>;
+  createdAt?: Maybe<DateTimeFilter>;
+  id?: Maybe<StringFilter>;
+  title?: Maybe<StringFilter>;
+  updatedAt?: Maybe<DateTimeFilter>;
+  user?: Maybe<UserWhereInput>;
+  userId?: Maybe<IntFilter>;
+};
+
 export type RecipeWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
 };
 
 export type StringFieldUpdateOperationsInput = {
   set?: Maybe<Scalars['String']>;
+};
+
+export type StringFilter = {
+  contains?: Maybe<Scalars['String']>;
+  endsWith?: Maybe<Scalars['String']>;
+  equals?: Maybe<Scalars['String']>;
+  gt?: Maybe<Scalars['String']>;
+  gte?: Maybe<Scalars['String']>;
+  in?: Maybe<Array<Scalars['String']>>;
+  lt?: Maybe<Scalars['String']>;
+  lte?: Maybe<Scalars['String']>;
+  mode?: Maybe<QueryMode>;
+  not?: Maybe<NestedStringFilter>;
+  notIn?: Maybe<Array<Scalars['String']>>;
+  startsWith?: Maybe<Scalars['String']>;
+};
+
+export type StringNullableFilter = {
+  contains?: Maybe<Scalars['String']>;
+  endsWith?: Maybe<Scalars['String']>;
+  equals?: Maybe<Scalars['String']>;
+  gt?: Maybe<Scalars['String']>;
+  gte?: Maybe<Scalars['String']>;
+  in?: Maybe<Array<Scalars['String']>>;
+  lt?: Maybe<Scalars['String']>;
+  lte?: Maybe<Scalars['String']>;
+  mode?: Maybe<QueryMode>;
+  not?: Maybe<NestedStringNullableFilter>;
+  notIn?: Maybe<Array<Scalars['String']>>;
+  startsWith?: Maybe<Scalars['String']>;
 };
 
 /** A User */
@@ -172,6 +320,20 @@ export type UserUpsertWithoutRecipesInput = {
   update: UserUpdateWithoutRecipesInput;
 };
 
+export type UserWhereInput = {
+  AND?: Maybe<Array<UserWhereInput>>;
+  NOT?: Maybe<Array<UserWhereInput>>;
+  OR?: Maybe<Array<UserWhereInput>>;
+  Recipes?: Maybe<RecipeListRelationFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  email?: Maybe<StringNullableFilter>;
+  emailVerified?: Maybe<DateTimeNullableFilter>;
+  id?: Maybe<IntFilter>;
+  image?: Maybe<StringNullableFilter>;
+  name?: Maybe<StringNullableFilter>;
+  updatedAt?: Maybe<DateTimeFilter>;
+};
+
 export type UserWhereUniqueInput = {
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
@@ -190,12 +352,13 @@ export type CreateOneRecipeMutation = (
   ) }
 );
 
-export type GetUserQueryVariables = Exact<{
-  where: UserWhereUniqueInput;
+export type GetUserAndRecipesQueryVariables = Exact<{
+  whereUser: UserWhereUniqueInput;
+  whereRecipes: RecipeWhereInput;
 }>;
 
 
-export type GetUserQuery = (
+export type GetUserAndRecipesQuery = (
   { __typename?: 'Query' }
   & { user?: Maybe<(
     { __typename?: 'User' }
@@ -265,9 +428,9 @@ export function useCreateOneRecipeMutation(baseOptions?: ApolloReactHooks.Mutati
 export type CreateOneRecipeMutationHookResult = ReturnType<typeof useCreateOneRecipeMutation>;
 export type CreateOneRecipeMutationResult = ApolloReactCommon.MutationResult<CreateOneRecipeMutation>;
 export type CreateOneRecipeMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateOneRecipeMutation, CreateOneRecipeMutationVariables>;
-export const GetUserDocument = gql`
-    query getUser($where: UserWhereUniqueInput!) {
-  user(where: $where) {
+export const GetUserAndRecipesDocument = gql`
+    query getUserAndRecipes($whereUser: UserWhereUniqueInput!, $whereRecipes: RecipeWhereInput!) {
+  user(where: $whereUser) {
     createdAt
     email
     emailVerified
@@ -276,7 +439,7 @@ export const GetUserDocument = gql`
     name
     updatedAt
   }
-  recipes {
+  recipes(where: $whereRecipes) {
     id
     title
   }
@@ -284,30 +447,31 @@ export const GetUserDocument = gql`
     `;
 
 /**
- * __useGetUserQuery__
+ * __useGetUserAndRecipesQuery__
  *
- * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetUserAndRecipesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserAndRecipesQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetUserQuery({
+ * const { data, loading, error } = useGetUserAndRecipesQuery({
  *   variables: {
- *      where: // value for 'where'
+ *      whereUser: // value for 'whereUser'
+ *      whereRecipes: // value for 'whereRecipes'
  *   },
  * });
  */
-export function useGetUserQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
-        return ApolloReactHooks.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, baseOptions);
+export function useGetUserAndRecipesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetUserAndRecipesQuery, GetUserAndRecipesQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetUserAndRecipesQuery, GetUserAndRecipesQueryVariables>(GetUserAndRecipesDocument, baseOptions);
       }
-export function useGetUserLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, baseOptions);
+export function useGetUserAndRecipesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetUserAndRecipesQuery, GetUserAndRecipesQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetUserAndRecipesQuery, GetUserAndRecipesQueryVariables>(GetUserAndRecipesDocument, baseOptions);
         }
-export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
-export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
-export type GetUserQueryResult = ApolloReactCommon.QueryResult<GetUserQuery, GetUserQueryVariables>;
+export type GetUserAndRecipesQueryHookResult = ReturnType<typeof useGetUserAndRecipesQuery>;
+export type GetUserAndRecipesLazyQueryHookResult = ReturnType<typeof useGetUserAndRecipesLazyQuery>;
+export type GetUserAndRecipesQueryResult = ApolloReactCommon.QueryResult<GetUserAndRecipesQuery, GetUserAndRecipesQueryVariables>;
 export const DeleteOneRecipeDocument = gql`
     mutation deleteOneRecipe($where: RecipeWhereUniqueInput!) {
   deleteOneRecipe(where: $where) {
