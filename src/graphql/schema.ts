@@ -24,7 +24,7 @@ export const schema = makeSchema({
     }),
   ],
   outputs: {
-    schema: path.join(currentDirectory, 'schema.graphql'),
+    schema: path.join(currentDirectory, 'src/schema.graphql'),
     typegen: path.join(
       currentDirectory,
       'node_modules/@types/nexus-typegen/index.d.ts'
