@@ -6,7 +6,7 @@ import { useToasts } from 'react-toast-notifications';
 import { v4 } from 'uuid';
 import { useSession } from 'next-auth/client';
 
-import { useCreateOneRecipeMutation } from '../../graphql-codegen';
+import { useCreateOneRecipeMutation } from 'graphql-codegen';
 import { Modal } from './Modal';
 
 export const CREATE_RECIPE_MUTATION = gql`

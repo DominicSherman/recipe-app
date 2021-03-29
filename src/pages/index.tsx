@@ -2,8 +2,7 @@ import { gql } from '@apollo/client';
 import { CreateRecipeButton, NavBar } from 'components';
 import Link from 'next/link';
 import { useUserId } from 'utils';
-
-import { Recipe, useGetUserAndRecipesQuery } from '../../graphql-codegen';
+import { Recipe, useGetUserAndRecipesQuery } from 'graphql-codegen';
 
 export const CREATE_RECIPE_MUTATION = gql`
   query getUserAndRecipes(

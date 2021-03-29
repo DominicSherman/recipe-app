@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 import { NavBar } from 'components';
 import { useRouter } from 'next/router';
 
-import { useGetRecipeQuery } from '../../../graphql-codegen';
+import { useGetRecipeQuery } from 'graphql-codegen';
 
 export const GET_RECIPE_QUERY = gql`
   query getRecipe($where: RecipeWhereUniqueInput!) {
