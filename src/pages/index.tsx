@@ -73,7 +73,7 @@ const RecipeItem = ({
   return (
     <div className="w-96 flex flex-row justify-between">
       <Link href={`recipes/${recipe.id}`}>
-        <a className="text-2xl text-white font-semibold ml-7" href="#">
+        <a className="text-2xl font-semibold ml-7" href="#">
           {recipe.title}
         </a>
       </Link>

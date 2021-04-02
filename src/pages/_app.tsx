@@ -1,4 +1,6 @@
 import 'css/global.css';
+import 'draft-js/dist/Draft.css';
+import 'draftail/dist/draftail.css';
 
 import { Meta } from 'components';
 import { Provider as NextAuthProvider } from 'next-auth/client';
