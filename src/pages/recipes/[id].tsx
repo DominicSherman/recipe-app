@@ -2,14 +2,31 @@ import { gql } from '@apollo/client';
 import { NavBar } from 'components';
 import Editor from 'components/Editor';
 import { useRouter } from 'next/router';
+import { stateToHTML } from 'draft-js-export-html';
+import { convertFromRaw } from 'draft-js';
 
-import { useGetRecipeQuery } from 'graphql-codegen';
+import { useGetRecipeQuery, useUpdateRecipeMutation } from 'graphql-codegen';
+import { useUserId } from 'utils';
 
 export const GET_RECIPE_QUERY = gql`
   query getRecipe($where: RecipeWhereUniqueInput!) {
     recipe(where: $where) {
       id
+      userId
       title
+      text
+    }
+  }
+
+  mutation updateRecipe(
+    $data: RecipeUpdateInput!
+    $where: RecipeWhereUniqueInput!
+  ) {
+    updateOneRecipe(data: $data, where: $where) {
+      id
+      userId
+      title
+      text
     }
   }
 `;
@@ -36,19 +53,62 @@ export default function RecipeId() {
     },
   });
 
+  const [updateRecipe] = useUpdateRecipeMutation({
+    onError: (error) => {
+      console.log('error', error);
+    },
+  });
+
+  const userId = useUserId();
   const recipeTitle = response.data?.recipe?.title;
+  const recipeText = response.data?.recipe?.text;
+  const userOwnsRecipe = Number(userId) === response.data?.recipe?.userId;
+
+  console.log(
+    'userId, userOwnsRecipe, response?.data?.recipe',
+    userId,
+    userOwnsRecipe,
+    response?.data?.recipe
+  );
+
+  const htmlText = recipeText
+    ? stateToHTML(convertFromRaw(JSON.parse(recipeText)))
+    : '';
 
   return (
     <div className="w-screen h-screen flex flex-col bg-primary">
       <NavBar />
       <div className="w-full flex flex-col items-center">
-        <div className="pt-16 flex flex-col justify-center w-full max-w-7xl">
+        <div className="pt-16 flex flex-col justify-center items-center w-full max-w-2xl">
           {recipeTitle ? (
             <h1 className="text-primary">{recipeTitle}</h1>
           ) : (
             <div className="w-56 rounded-md h-8 animate-pulse bg-blue-300" />
           )}
-          <Editor />
+          {userOwnsRecipe ? (
+            <Editor
+              defaultText={recipeText}
+              onSave={(rawContent) => {
+                updateRecipe({
+                  variables: {
+                    data: {
+                      text: {
+                        set: rawContent,
+                      },
+                    },
+                    where: {
+                      id,
+                    },
+                  },
+                });
+              }}
+            />
+          ) : (
+            <div
+              className="prose mt-8"
+              dangerouslySetInnerHTML={{ __html: htmlText }}
+            />
+          )}
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 
 const plugins = [createMarkdownPlugin()];
 
-const Editor = () => {
+const Editor = ({ defaultText, onSave }) => {
   const [editorState, setEditorState] = useState(createEditorStateWithText(''));
 
   const onChange = (state) => {
@@ -51,7 +51,10 @@ const Editor = () => {
 
   return (
     <div className="mt-8 w-full">
-      <div className="bg-white p-4 min-h-[600px] cursor-text" onClick={focus}>
+      <div
+        className="relative bg-white p-4 min-h-[600px] cursor-text"
+        onClick={focus}
+      >
         <DraftEditor
           editorKey="SimpleInlineToolbarEditor"
           editorState={editorState}
@@ -63,6 +66,16 @@ const Editor = () => {
             editorRef.current = element;
           }}
         />
+        <button
+          className="btn absolute top-4 right-4 z-10"
+          onClick={() =>
+            onSave(
+              JSON.stringify(convertToRaw(editorState.getCurrentContent()))
+            )
+          }
+        >
+          Save
+        </button>
       </div>
     </div>
   );

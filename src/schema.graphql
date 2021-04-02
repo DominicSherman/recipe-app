@@ -147,6 +147,7 @@ A Recipe
 type Recipe {
   createdAt: DateTime!
   id: String!
+  text: String
   title: String!
   updatedAt: DateTime!
   user: User!
@@ -156,6 +157,7 @@ type Recipe {
 input RecipeCreateInput {
   createdAt: DateTime
   id: String
+  text: String
   title: String!
   updatedAt: DateTime
   user: UserCreateNestedOneWithoutRecipesInput!
@@ -170,6 +172,7 @@ input RecipeListRelationFilter {
 input RecipeUpdateInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
+  text: NullableStringFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   user: UserUpdateOneRequiredWithoutRecipesInput
@@ -181,6 +184,7 @@ input RecipeWhereInput {
   OR: [RecipeWhereInput!]
   createdAt: DateTimeFilter
   id: StringFilter
+  text: StringNullableFilter
   title: StringFilter
   updatedAt: DateTimeFilter
   user: UserWhereInput
