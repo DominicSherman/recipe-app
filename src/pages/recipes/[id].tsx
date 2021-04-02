@@ -105,7 +105,7 @@ export default function RecipeId() {
             />
           ) : (
             <div
-              className="prose mt-8"
+              className="mt-8 w-full"
               dangerouslySetInnerHTML={{ __html: htmlText }}
             />
           )}

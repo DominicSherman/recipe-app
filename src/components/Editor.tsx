@@ -1,5 +1,3 @@
-import 'draft-js/dist/Draft.css';
-
 import { convertToRaw, convertFromRaw, EditorState } from 'draft-js';
 import DraftEditor, {
   createEditorStateWithText,
