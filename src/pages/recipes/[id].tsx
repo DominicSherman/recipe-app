@@ -3,17 +3,12 @@ import { NavBar } from 'components';
 import { useRouter } from 'next/router';
 import { stateToHTML } from 'draft-js-export-html';
 import { convertToRaw, convertFromRaw, EditorState } from 'draft-js';
-import DraftEditor, {
-  createEditorStateWithText,
-} from '@draft-js-plugins/editor';
-import { RichUtils } from 'draft-js';
-import createMarkdownPlugin from 'draft-js-markdown-shortcuts-plugin';
+import { createEditorStateWithText } from '@draft-js-plugins/editor';
 import { useEffect, useRef, useState } from 'react';
 
 import { useGetRecipeQuery, useUpdateRecipeMutation } from 'graphql-codegen';
 import { useUserId } from 'utils';
-
-const plugins = [createMarkdownPlugin()];
+import Editor from 'components/editor';
 
 export const GET_RECIPE_QUERY = gql`
   query getRecipe($where: RecipeWhereUniqueInput!) {
@@ -102,19 +97,7 @@ export default function RecipeId() {
     window.localStorage.setItem('rawContent', JSON.stringify(rawContent));
   }, [editorState]);
 
-  const editorRef = useRef<DraftEditor | null>();
-
-  const handleKeyCommand = (command, editorState) => {
-    const newState = RichUtils.handleKeyCommand(editorState, command);
-
-    if (newState) {
-      onChange(newState);
-
-      return 'handled';
-    }
-
-    return 'not-handled';
-  };
+  const editorRef = useRef<any | null>();
 
   const focus = () => editorRef.current?.focus();
 
@@ -155,26 +138,21 @@ export default function RecipeId() {
             </button>
           ) : null}
           {recipeTitle ? (
-            <h1 className="text-primary">{recipeTitle}</h1>
+            <h1 className="text-5xl text-primary pb-2">{recipeTitle}</h1>
           ) : (
-            <div className="w-56 rounded-md h-8 animate-pulse bg-blue-300" />
+            <div className="w-56 rounded-md h-8 animate-pulse bg-blue-300 pb-2" />
           )}
           <div
-            className={`mt-8 w-full relative p-6 min-h-[600px] ${
+            className={`w-full relative p-4 min-h-[600px] ${
               isEditing ? 'bg-white cursor-text rounded-md shadow-md' : ''
             }`}
             onClick={focus}
           >
             {isEditing ? (
-              <DraftEditor
-                editorKey="SimpleInlineToolbarEditor"
+              <Editor
                 editorState={editorState}
-                handleKeyCommand={handleKeyCommand}
                 onChange={onChange}
-                plugins={plugins}
-                ref={(element) => {
-                  editorRef.current = element;
-                }}
+                ref={editorRef}
               />
             ) : (
               <div dangerouslySetInnerHTML={{ __html: htmlText }} />
