@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 
 const plugins = [createMarkdownPlugin()];
 
-const Editor = ({ defaultText, onSave }) => {
+const Editor = ({ onSave }) => {
   const [editorState, setEditorState] = useState(createEditorStateWithText(''));
 
   const onChange = (state) => {
@@ -48,34 +48,27 @@ const Editor = ({ defaultText, onSave }) => {
   const focus = () => editorRef.current?.focus();
 
   return (
-    <div className="mt-8 w-full">
-      <div
-        className="relative bg-white p-4 min-h-[600px] cursor-text"
-        onClick={focus}
+    <>
+      <DraftEditor
+        editorKey="SimpleInlineToolbarEditor"
+        editorState={editorState}
+        handleKeyCommand={handleKeyCommand}
+        onChange={onChange}
+        placeholder={'Add recipe here...'}
+        plugins={plugins}
+        ref={(element) => {
+          editorRef.current = element;
+        }}
+      />
+      <button
+        className="btn absolute top-4 right-4 z-10"
+        onClick={() =>
+          onSave(JSON.stringify(convertToRaw(editorState.getCurrentContent())))
+        }
       >
-        <DraftEditor
-          editorKey="SimpleInlineToolbarEditor"
-          editorState={editorState}
-          handleKeyCommand={handleKeyCommand}
-          onChange={onChange}
-          placeholder={'Add recipe here...'}
-          plugins={plugins}
-          ref={(element) => {
-            editorRef.current = element;
-          }}
-        />
-        <button
-          className="btn absolute top-4 right-4 z-10"
-          onClick={() =>
-            onSave(
-              JSON.stringify(convertToRaw(editorState.getCurrentContent()))
-            )
-          }
-        >
-          Save
-        </button>
-      </div>
-    </div>
+        Save
+      </button>
+    </>
   );
 };
 

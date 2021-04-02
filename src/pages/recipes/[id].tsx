@@ -4,6 +4,7 @@ import Editor from 'components/Editor';
 import { useRouter } from 'next/router';
 import { stateToHTML } from 'draft-js-export-html';
 import { convertFromRaw } from 'draft-js';
+import { useState } from 'react';
 
 import { useGetRecipeQuery, useUpdateRecipeMutation } from 'graphql-codegen';
 import { useUserId } from 'utils';
@@ -53,9 +54,14 @@ export default function RecipeId() {
     },
   });
 
+  const [isEditing, setIsEditing] = useState(false);
+
   const [updateRecipe] = useUpdateRecipeMutation({
     onError: (error) => {
       console.log('error', error);
+    },
+    onCompleted: () => {
+      setIsEditing(false);
     },
   });
 
@@ -79,36 +85,47 @@ export default function RecipeId() {
     <div className="w-screen h-screen flex flex-col bg-primary">
       <NavBar />
       <div className="w-full flex flex-col items-center">
-        <div className="pt-16 flex flex-col justify-center items-center w-full max-w-2xl">
+        <div className="relative pt-16 flex flex-col justify-center items-center w-full max-w-2xl">
+          {userOwnsRecipe && !isEditing ? (
+            <button
+              className="absolute top-4 right-4 btn"
+              onClick={() => setIsEditing(true)}
+            >
+              Edit
+            </button>
+          ) : null}
           {recipeTitle ? (
             <h1 className="text-primary">{recipeTitle}</h1>
           ) : (
             <div className="w-56 rounded-md h-8 animate-pulse bg-blue-300" />
           )}
-          {userOwnsRecipe ? (
-            <Editor
-              defaultText={recipeText}
-              onSave={(rawContent) => {
-                updateRecipe({
-                  variables: {
-                    data: {
-                      text: {
-                        set: rawContent,
+          <div
+            className={`mt-8 w-full relative p-6 min-h-[600px] ${
+              isEditing ? 'bg-white cursor-text rounded-md shadow-md' : ''
+            }`}
+          >
+            {isEditing ? (
+              <Editor
+                // defaultText={recipeText}
+                onSave={(rawContent) => {
+                  updateRecipe({
+                    variables: {
+                      data: {
+                        text: {
+                          set: rawContent,
+                        },
+                      },
+                      where: {
+                        id,
                       },
                     },
-                    where: {
-                      id,
-                    },
-                  },
-                });
-              }}
-            />
-          ) : (
-            <div
-              className="mt-8 w-full"
-              dangerouslySetInnerHTML={{ __html: htmlText }}
-            />
-          )}
+                  });
+                }}
+              />
+            ) : (
+              <div dangerouslySetInnerHTML={{ __html: htmlText }} />
+            )}
+          </div>
         </div>
       </div>
     </div>
