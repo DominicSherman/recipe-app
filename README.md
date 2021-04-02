@@ -4,9 +4,11 @@ Basic template for new applications.
 
 ### Deployments
 
-Our base branch is `development`, which deploys to dev on merge.
+Our base branch is `development`, which deploys to dev on merge. Our production branch is `production`, which deploys to production on merge.
 
-Our other branch is `production`, which deploys to production on merge. In order to do a prod deployment, simply [make a PR from `development` to `production`](https://github.com/Be-The-Chameleon/next-template/compare/production...development). Please ensure you do _not_ squash and merge commits so that we bring all the `development` commits to the `production` branch, which makes it easy to track our history. Title your PR `Deploy MM-DD-YY`, and when you merge name the PR merging commit the same as the PR title. 
+To deploy, simply kick off the deploy workflow.
+
+To see what changes are currently in dev and have not been deployed, [compare development and production]((https://github.com/Be-The-Chameleon/next-template/compare/production...development)).
 
 ### Tech stack
 
