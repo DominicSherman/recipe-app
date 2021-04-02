@@ -1,5 +1,6 @@
 import 'draft-js/dist/Draft.css';
 
+import { convertToRaw, convertFromRaw, EditorState } from 'draft-js';
 import DraftEditor, {
   createEditorStateWithText,
 } from '@draft-js-plugins/editor';
@@ -17,8 +18,20 @@ const Editor = () => {
   };
 
   useEffect(() => {
-    setEditorState(createEditorStateWithText(''));
+    const storeRaw = window.localStorage.getItem('rawContent');
+
+    const content = storeRaw
+      ? EditorState.createWithContent(convertFromRaw(JSON.parse(storeRaw)))
+      : createEditorStateWithText('');
+
+    setEditorState(content);
   }, []);
+
+  useEffect(() => {
+    const contentState = editorState.getCurrentContent();
+    const rawContent = convertToRaw(contentState);
+    window.localStorage.setItem('rawContent', JSON.stringify(rawContent));
+  }, [editorState]);
 
   const editorRef = useRef<DraftEditor | null>();
 
