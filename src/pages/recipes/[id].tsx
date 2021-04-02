@@ -1,13 +1,19 @@
 import { gql } from '@apollo/client';
 import { NavBar } from 'components';
-import Editor from 'components/Editor';
 import { useRouter } from 'next/router';
 import { stateToHTML } from 'draft-js-export-html';
-import { convertFromRaw } from 'draft-js';
-import { useState } from 'react';
+import { convertToRaw, convertFromRaw, EditorState } from 'draft-js';
+import DraftEditor, {
+  createEditorStateWithText,
+} from '@draft-js-plugins/editor';
+import { RichUtils } from 'draft-js';
+import createMarkdownPlugin from 'draft-js-markdown-shortcuts-plugin';
+import { useEffect, useRef, useState } from 'react';
 
 import { useGetRecipeQuery, useUpdateRecipeMutation } from 'graphql-codegen';
 import { useUserId } from 'utils';
+
+const plugins = [createMarkdownPlugin()];
 
 export const GET_RECIPE_QUERY = gql`
   query getRecipe($where: RecipeWhereUniqueInput!) {
@@ -70,16 +76,47 @@ export default function RecipeId() {
   const recipeText = response.data?.recipe?.text;
   const userOwnsRecipe = Number(userId) === response.data?.recipe?.userId;
 
-  console.log(
-    'userId, userOwnsRecipe, response?.data?.recipe',
-    userId,
-    userOwnsRecipe,
-    response?.data?.recipe
-  );
-
   const htmlText = recipeText
     ? stateToHTML(convertFromRaw(JSON.parse(recipeText)))
     : '';
+
+  const [editorState, setEditorState] = useState(createEditorStateWithText(''));
+
+  const onChange = (state) => {
+    setEditorState(state);
+  };
+
+  useEffect(() => {
+    const storeRaw = window.localStorage.getItem('rawContent');
+
+    const content = storeRaw
+      ? EditorState.createWithContent(convertFromRaw(JSON.parse(storeRaw)))
+      : createEditorStateWithText('');
+
+    setEditorState(content);
+  }, []);
+
+  useEffect(() => {
+    const contentState = editorState.getCurrentContent();
+    const rawContent = convertToRaw(contentState);
+    window.localStorage.setItem('rawContent', JSON.stringify(rawContent));
+  }, [editorState]);
+
+  const editorRef = useRef<DraftEditor | null>();
+
+  const handleKeyCommand = (command, editorState) => {
+    const newState = RichUtils.handleKeyCommand(editorState, command);
+
+    if (newState) {
+      onChange(newState);
+
+      return 'handled';
+    }
+
+    return 'not-handled';
+  };
+
+  const focus = () => editorRef.current?.focus();
 
   return (
     <div className="w-screen h-screen flex flex-col bg-primary">
@@ -94,6 +131,29 @@ export default function RecipeId() {
               Edit
             </button>
           ) : null}
+          {userOwnsRecipe && isEditing ? (
+            <button
+              className="btn absolute top-4 right-4 z-10"
+              onClick={() =>
+                updateRecipe({
+                  variables: {
+                    data: {
+                      text: {
+                        set: JSON.stringify(
+                          convertToRaw(editorState.getCurrentContent())
+                        ),
+                      },
+                    },
+                    where: {
+                      id,
+                    },
+                  },
+                })
+              }
+            >
+              Save
+            </button>
+          ) : null}
           {recipeTitle ? (
             <h1 className="text-primary">{recipeTitle}</h1>
           ) : (
@@ -103,23 +163,17 @@ export default function RecipeId() {
             className={`mt-8 w-full relative p-6 min-h-[600px] ${
               isEditing ? 'bg-white cursor-text rounded-md shadow-md' : ''
             }`}
+            onClick={focus}
           >
             {isEditing ? (
-              <Editor
-                // defaultText={recipeText}
-                onSave={(rawContent) => {
-                  updateRecipe({
-                    variables: {
-                      data: {
-                        text: {
-                          set: rawContent,
-                        },
-                      },
-                      where: {
-                        id,
-                      },
-                    },
-                  });
+              <DraftEditor
+                editorKey="SimpleInlineToolbarEditor"
+                editorState={editorState}
+                handleKeyCommand={handleKeyCommand}
+                onChange={onChange}
+                plugins={plugins}
+                ref={(element) => {
+                  editorRef.current = element;
                 }}
               />
             ) : (
