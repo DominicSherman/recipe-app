@@ -4,8 +4,7 @@ overwrite: true
 generates:
   src/graphql-codegen.ts:
     documents:
-      - 'src/**/*.{ts,tsx}'
-      - '!src/pages/api*'
+      - 'src/graphql/queries.ts'
     plugins:
       - typescript
       - typescript-operations
