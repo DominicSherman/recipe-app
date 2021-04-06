@@ -56,6 +56,7 @@ export default function RecipeId() {
   });
 
   const [isEditing, setIsEditing] = useState(false);
+  const [editingTitle, setEditingTitle] = useState('');
 
   const [updateRecipe] = useUpdateRecipeMutation({
     onError: (error) => {
@@ -97,6 +98,13 @@ export default function RecipeId() {
     window.localStorage.setItem('rawContent', JSON.stringify(rawContent));
   }, [editorState]);
 
+  useEffect(() => {
+    if (recipeTitle && recipeTitle !== editingTitle) {
+      setEditingTitle(recipeTitle);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [recipeTitle, setEditingTitle]);
+
   const editorRef = useRef<any | null>();
 
   const focus = () => editorRef.current?.focus();
@@ -105,7 +113,7 @@ export default function RecipeId() {
     <div className="w-screen h-screen flex flex-col bg-primary">
       <NavBar />
       <div className="w-full flex flex-col items-center">
-        <div className="relative pt-16 flex flex-col justify-center items-center w-full max-w-2xl">
+        <div className="relative pt-16 flex flex-col justify-center w-full max-w-2xl">
           {userOwnsRecipe && !isEditing ? (
             <button
               className="absolute top-4 right-4 btn"
@@ -117,10 +125,15 @@ export default function RecipeId() {
           {userOwnsRecipe && isEditing ? (
             <button
               className="btn absolute top-4 right-4 z-10"
-              onClick={() =>
+              onClick={() => {
+                const titleProp = editingTitle
+                  ? { title: { set: editingTitle } }
+                  : {};
+
                 updateRecipe({
                   variables: {
                     data: {
+                      ...titleProp,
                       text: {
                         set: JSON.stringify(
                           convertToRaw(editorState.getCurrentContent())
@@ -131,14 +144,22 @@ export default function RecipeId() {
                       id,
                     },
                   },
-                })
-              }
+                });
+              }}
             >
               Save
             </button>
           ) : null}
           {recipeTitle ? (
-            <h1 className="text-5xl text-primary pb-2">{recipeTitle}</h1>
+            isEditing ? (
+              <input
+                className="text-5xl text-primary font-extrabold mb-2 font rounded-md appearance-none flex justify-center p-2 w-full"
+                onChange={(e) => setEditingTitle(e.target.value)}
+                value={editingTitle}
+              />
+            ) : (
+              <h1 className="text-5xl text-primary pb-2">{recipeTitle}</h1>
+            )
           ) : (
             <div className="w-56 rounded-md h-8 animate-pulse bg-blue-300 pb-2" />
           )}
