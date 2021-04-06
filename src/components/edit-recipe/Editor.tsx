@@ -25,7 +25,7 @@ export const Editor = () => {
       handleKeyCommand={handleKeyCommand}
       onChange={onChange}
       plugins={plugins}
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       ref={editorRef}
     />
