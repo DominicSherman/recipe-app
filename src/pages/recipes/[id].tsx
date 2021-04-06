@@ -4,10 +4,8 @@ import {
   Editor,
   EditOrSaveButton,
   Title,
-  useDefaultDraftState,
   useEditorContext,
   useRecipe,
-  useSetEditingRecipeTitle,
 } from 'components/edit-recipe';
 import { EditorProvider } from 'components/edit-recipe/context';
 
