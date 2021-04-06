@@ -27,6 +27,7 @@ module.exports = {
       indigo: colors.indigo,
       purple: colors.violet,
       pink: colors.pink,
+      cyan: colors.cyan,
     },
     spacing: {
       px: '1px',
@@ -74,8 +75,9 @@ module.exports = {
     },
     backgroundColor: (theme) => ({
       ...theme('colors'),
-      primary: theme('colors.gray.800'),
-      secondary: theme('colors.gray.700'),
+      primary: theme('colors.gray.200'),
+      secondary: theme('colors.gray.50'),
+      tertiary: theme('colors.gray.50'),
     }),
     backgroundImage: {
       none: 'none',
@@ -626,7 +628,7 @@ module.exports = {
     },
     textColor: (theme) => ({
       ...theme('colors'),
-      primary: theme('colors.white'),
+      primary: theme('colors.gray.900'),
     }),
     textOpacity: (theme) => theme('opacity'),
     transformOrigin: {
@@ -924,5 +926,5 @@ module.exports = {
     wordBreak: ['responsive'],
     zIndex: ['responsive', 'focus-within', 'focus'],
   },
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
 };

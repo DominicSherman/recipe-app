@@ -1,7 +1,6 @@
 module.exports = {
   extends: [
     'react-app',
-    'plugin:jsx-a11y/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
   ],
@@ -9,10 +8,10 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2020,
   },
-  plugins: ['jsx-a11y', 'react-hooks'],
+  plugins: ['react-hooks'],
   root: true,
   rules: {
-    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'jsx-a11y/accessible-emoji': 0,

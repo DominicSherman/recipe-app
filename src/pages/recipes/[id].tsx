@@ -1,48 +1,56 @@
-import { gql } from '@apollo/client';
 import { NavBar } from 'components';
-import { useRouter } from 'next/router';
+import {
+  convertDraftStateTextToHtml,
+  Editor,
+  EditOrSaveButton,
+  Title,
+  useEditorContext,
+  useRecipe,
+} from 'components/edit-recipe';
+import { EditorProvider } from 'components/edit-recipe/context';
 
-import { useGetRecipeQuery } from 'graphql-codegen';
+const ViewRecipePage = () => {
+  const recipe = useRecipe();
+  const htmlText = convertDraftStateTextToHtml(recipe.text);
 
-export const GET_RECIPE_QUERY = gql`
-  query getRecipe($where: RecipeWhereUniqueInput!) {
-    recipe(where: $where) {
-      id
-      title
-    }
-  }
-`;
-
-const getIdFromQuery = (id?: string | string[]): string => {
-  if (!id || Array.isArray(id)) {
-    return '';
-  }
-
-  return id;
-};
-
-export default function RecipeId() {
-  const router = useRouter();
-  const id = getIdFromQuery(router.query.id);
-  const idIsInvalid = !id.length || Array.isArray(id);
-
-  const response = useGetRecipeQuery({
-    skip: idIsInvalid,
-    variables: {
-      where: {
-        id,
-      },
-    },
-  });
+  const { isEditing, focus } = useEditorContext();
 
   return (
     <div className="w-screen h-screen flex flex-col bg-primary">
       <NavBar />
-      <div className="pt-16 flex flex-col justify-center items-center w-full">
-        <h2 className="text-3xl font-bold text-primary">
-          {response.data?.recipe?.title}
-        </h2>
+      <div className="w-full flex flex-col items-center">
+        {recipe ? (
+          <div className="relative pt-16 flex flex-col justify-center w-full max-w-2xl">
+            <EditOrSaveButton />
+            <Title />
+            <div
+              className={`w-full relative p-4 min-h-[600px] ${
+                isEditing ? 'bg-white cursor-text rounded-md' : ''
+              }`}
+              onClick={focus}
+            >
+              {isEditing ? (
+                <Editor />
+              ) : (
+                <div dangerouslySetInnerHTML={{ __html: htmlText }} />
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="relative pt-16 flex flex-col justify-center w-full max-w-2xl">
+            <div className="w-56 rounded-md h-12 animate-pulse bg-gray-300 pb-2 mb-2" />
+            <div className=" w-full h-[600px] rounded-md animate-pulse bg-gray-300" />
+          </div>
+        )}
       </div>
     </div>
+  );
+};
+
+export default function RecipeId() {
+  return (
+    <EditorProvider>
+      <ViewRecipePage />
+    </EditorProvider>
   );
 }

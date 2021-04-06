@@ -1,4 +1,3 @@
-import { gql } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -7,15 +6,7 @@ import { v4 } from 'uuid';
 import { useSession } from 'next-auth/client';
 
 import { useCreateOneRecipeMutation } from 'graphql-codegen';
-import { Modal } from './Modal';
-
-export const CREATE_RECIPE_MUTATION = gql`
-  mutation createOneRecipe($data: RecipeCreateInput!) {
-    createOneRecipe(data: $data) {
-      id
-    }
-  }
-`;
+import { Modal } from 'components';
 
 export const CreateRecipeModal = ({ isOpen, setIsOpen }) => {
   const router = useRouter();

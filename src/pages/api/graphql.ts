@@ -14,6 +14,16 @@ export const config = {
 };
 
 export const server = new ApolloServer({
+  formatError: (error) => {
+    const errorObject = {
+      message: error.message,
+      statusCode: error.extensions?.code,
+    };
+
+    console.log('GraphQL Error -- ', errorObject);
+
+    return errorObject;
+  },
   schema,
   playground: !isProduction(),
   introspection: true,

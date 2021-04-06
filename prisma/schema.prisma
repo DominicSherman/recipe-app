@@ -67,6 +67,7 @@ model VerificationRequest {
 model Recipe {
   id        String   @id @default(uuid())
   title     String
+  text      String?
   userId    Int      @map(name: "user_id")
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now()) @map(name: "created_at")

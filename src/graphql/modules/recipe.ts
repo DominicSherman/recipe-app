@@ -6,6 +6,7 @@ export const Recipe = objectType({
   definition(t) {
     t.model.id();
     t.model.title();
+    t.model.text();
     t.model.userId();
     t.model.user();
     t.model.createdAt();
