@@ -8,7 +8,6 @@ import { convertDraftStateToString, convertStringToDraftState } from './utils';
 export const useEditorPersistence = () => {
   const [id] = useRouterId();
   const {editorState, isEditing, setEditorState, setIsEditing} = useEditorContext();
-  const {text} = useRecipe();
   const key = `draft-${id}`;
 
   useEffect(() => {
