@@ -32,7 +32,9 @@ export default function Home() {
           <CreateRecipeButton />
         </div>
       </div>
-      <div className="h-screen flex flex-col justify-center items-center w-full">
+      <div className="flex flex-col justify-center items-center w-full">
+        <h1>My Recipes</h1>
+        <div className="hr" />
         {data?.recipes.map((recipe) => (
           <RecipeItem recipe={recipe} />
         ))}
@@ -57,10 +59,7 @@ const RecipeItem = ({
   return (
     <div className="w-96 m-4 flex flex-row justify-between items-center">
       <Link href={`recipes/${recipe.id}`}>
-        <a
-          className="shadow-lg rounded-lg bg-secondary p-4 text-2xl font-semibold w-full mr-2"
-          href="#"
-        >
+        <a className="card" href="#">
           {recipe.title}
         </a>
       </Link>
