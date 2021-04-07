@@ -4,15 +4,16 @@ import React from 'react';
 import { useEditorContext } from './editor-context';
 import {
   useDefaultDraftState,
-  useHandleKeyCommand,
   useRecipe,
   useSetEditingRecipeTitle,
 } from './hooks';
+import {useHandleKeyCommand, useKeybindingFunction} from './keybindings';
 import { plugins } from './plugins';
 
 export const Editor = () => {
   const { editorState, onChange, editorRef } = useEditorContext();
   const handleKeyCommand = useHandleKeyCommand();
+  const keybindingFunction = useKeybindingFunction();
   const recipe = useRecipe();
 
   useSetEditingRecipeTitle(recipe.title);
@@ -22,6 +23,7 @@ export const Editor = () => {
     <DraftEditor
       editorKey="SimpleInlineToolbarEditor"
       editorState={editorState}
+      keyBindingFn={keybindingFunction}
       handleKeyCommand={handleKeyCommand}
       onChange={onChange}
       plugins={plugins}

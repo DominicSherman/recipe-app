@@ -1,7 +1,10 @@
-import { useRouterId } from 'utils';
+import {
+  convertFromRaw,
+  EditorState
+} from 'draft-js';
 import { useGetRecipeQuery } from 'graphql-codegen';
-import { RichUtils, EditorState, convertFromRaw } from 'draft-js';
 import { useEffect } from 'react';
+import { useRouterId } from 'utils';
 
 import { useEditorContext } from './editor-context';
 
@@ -61,24 +64,6 @@ export const useSetEditingRecipeTitle = (recipeTitle) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recipeTitle, setEditingTitle]);
-};
-
-export const useHandleKeyCommand = () => {
-  const { onChange } = useEditorContext();
-
-  const handleKeyCommand = (command, editorState) => {
-    const newState = RichUtils.handleKeyCommand(editorState, command);
-
-    if (newState) {
-      onChange(newState);
-
-      return 'handled';
-    }
-
-    return 'not-handled';
-  };
-
-  return handleKeyCommand;
 };
 
 export const useRecipe = () => {
