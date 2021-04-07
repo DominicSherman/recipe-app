@@ -1,7 +1,7 @@
 import DraftEditor from '@draft-js-plugins/editor';
 import React from 'react';
 
-import { useEditorContext } from './context';
+import { useEditorContext } from './editor-context';
 import {
   useDefaultDraftState,
   useHandleKeyCommand,

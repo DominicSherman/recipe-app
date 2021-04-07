@@ -7,7 +7,7 @@ import {
   useEditorContext,
   useRecipe,
 } from 'components/edit-recipe';
-import { EditorProvider } from 'components/edit-recipe/context';
+import { EditorProvider } from 'components/edit-recipe/editor-context';
 
 const ViewRecipePage = () => {
   const recipe = useRecipe();
