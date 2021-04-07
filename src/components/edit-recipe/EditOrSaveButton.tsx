@@ -8,22 +8,25 @@ const EditButton = () => {
   const { setIsEditing } = useEditorContext();
 
   return (
-    <button
-      className="btn"
-      onClick={() => setIsEditing(true)}
-    >
+    <button className="btn" onClick={() => setIsEditing(true)}>
       Edit
     </button>
   );
 };
 
 const SaveButton = () => {
-  const { editingTitle, editorState, setIsEditing, recipeHasChanged, saveLoading, onSave, onCancel } = useEditorContext();
-  const recipe = useRecipe();
+  const {
+    recipeHasChanged,
+    saveLoading,
+    onSave,
+    onCancel,
+  } = useEditorContext();
 
   return (
     <>
-      <button className="btn-secondary mr-4" onClick={onCancel}>Cancel</button>
+      <button className="btn-secondary mr-4" onClick={onCancel}>
+        Cancel
+      </button>
       <Button
         className="btn"
         disabled={!recipeHasChanged}
@@ -48,12 +51,7 @@ export const EditOrSaveButton = () => {
 
   return (
     <div className="absolute top-3 right-0 z-10 flex flex-row">
-      {
-        !isEditing ?
-          <EditButton />
-          :
-          <SaveButton />
-      }
+      {!isEditing ? <EditButton /> : <SaveButton />}
     </div>
-  )
+  );
 };

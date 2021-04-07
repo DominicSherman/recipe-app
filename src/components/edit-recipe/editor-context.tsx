@@ -1,10 +1,10 @@
 import { createEditorStateWithText } from '@draft-js-plugins/editor';
-import {useUpdateRecipeMutation} from 'graphql-codegen';
+import { useUpdateRecipeMutation } from 'graphql-codegen';
 import React, { useContext, useState } from 'react';
 import { useRef } from 'react';
-import {useRouterId} from 'utils';
-import {useRecipe} from './hooks';
-import {convertDraftStateToString} from './utils';
+import { useRouterId } from 'utils';
+import { useRecipe } from './hooks';
+import { convertDraftStateToString } from './utils';
 
 const EditorContext = React.createContext<{
   isEditing: boolean;
@@ -46,7 +46,7 @@ export const EditorProvider = ({ children }) => {
   const recipe = useRecipe();
   const recipeHasChanged = editorStateAsString !== recipe.text;
 
-  const [updateRecipe, {loading: saveLoading}] = useUpdateRecipeMutation({
+  const [updateRecipe, { loading: saveLoading }] = useUpdateRecipeMutation({
     onError: (error) => {
       console.log('error', error);
     },
@@ -57,6 +57,7 @@ export const EditorProvider = ({ children }) => {
 
   const onChange = (value) => setEditorState(value);
   const focus = () => editorRef.current?.focus();
+
   const onSave = () => {
     const titleProp = editingTitle ? { title: { set: editingTitle } } : {};
 
@@ -74,9 +75,10 @@ export const EditorProvider = ({ children }) => {
       },
     });
   };
+
   const onCancel = () => {
     setIsEditing(false);
-  }
+  };
 
   const value = {
     isEditing,
