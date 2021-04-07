@@ -3,32 +3,54 @@ import {
   KeyBindingUtil,
   RichUtils
 } from 'draft-js';
-import {KeyboardEvent} from 'react';
+import {KeyboardEvent, useEffect} from 'react';
 
 import { useEditorContext } from './editor-context';
+import {useRecipe} from './hooks';
 
 const {hasCommandModifier} = KeyBindingUtil;
 
 enum KeybindingKeys {
   save = 'save',
   cancel = 'cancel',
+  edit = 'edit',
 }
 
-export const useHandleKeyCommand = () => {
-  const { onChange, onSave, onCancel } = useEditorContext();
+const isSave = (e) => e.key === 's' && hasCommandModifier(e);
+
+const isCancel = (e) => e.key === 'Escape';
+
+const isEdit = (e) => e.key === 'e' && hasCommandModifier(e);
+
+const useKeybindingToFunction = () => {
+  const { onSave, onCancel, onEdit } = useEditorContext();
 
   const keybindingToFunction = {
     [KeybindingKeys.save]: onSave,
     [KeybindingKeys.cancel]: onCancel,
+    [KeybindingKeys.edit]: onEdit,
   }
 
-  const handleKeyCommand = (command, editorState) => {
-    if (Object.values(KeybindingKeys).includes(command)) {
-      const func = keybindingToFunction[command];
+  const getFunctionFromKeybinding = (keybinding: KeybindingKeys) => {
+    return () => {
+      const func = keybindingToFunction[keybinding];
 
       if (func) {
         func();
       }
+    }
+  }
+
+  return getFunctionFromKeybinding;
+};
+
+export const useHandleKeyCommand = () => {
+  const { onChange } = useEditorContext();
+  const getFunctionFromKeybinding = useKeybindingToFunction();
+
+  const handleKeyCommand = (command, editorState) => {
+    if (Object.values(KeybindingKeys).includes(command)) {
+      getFunctionFromKeybinding(command)();
 
       return 'handled';
     }
@@ -49,11 +71,11 @@ export const useHandleKeyCommand = () => {
 
 export const useKeybindingFunction = () => {
   const keybindingFunction = (e: KeyboardEvent<Element>) => {
-    if (e.key === 's' && hasCommandModifier(e)) {
+    if (isSave(e)) {
       return KeybindingKeys.save;
     }
 
-    if (e.key === 'Escape') {
+    if (isCancel(e)) {
       return KeybindingKeys.cancel;
     }
 
@@ -61,4 +83,33 @@ export const useKeybindingFunction = () => {
   };
 
   return keybindingFunction;
+};
+
+export const useGlobalKeybindings = () => {
+  const recipe = useRecipe();
+  const getFunctionFromKeybinding = useKeybindingToFunction();
+
+  useEffect(() => {
+    const handleKeyPress = (e): boolean => {
+      if (isEdit(e)) {
+        getFunctionFromKeybinding(KeybindingKeys.edit)();
+
+        return true;
+      }
+      
+      return false;
+    };
+
+    document.addEventListener('keydown', (e) => {
+      const handled = handleKeyPress(e);
+
+      if (handled) {
+        e.preventDefault();
+      }
+    });
+
+    return (): void => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [recipe]);
 };

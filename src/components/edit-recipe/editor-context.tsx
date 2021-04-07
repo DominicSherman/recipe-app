@@ -46,7 +46,7 @@ export const EditorProvider = ({ children }) => {
   const editorRef = useRef<any | null>();
   const editorStateAsString = convertDraftStateToString(editorState);
   const recipe = useRecipe();
-  const recipeHasChanged = editorStateAsString !== recipe.text;
+  const recipeHasChanged = editorStateAsString !== recipe.text || editingTitle !== recipe.title;
 
   const [updateRecipe, { loading: saveLoading }] = useUpdateRecipeMutation({
     onError: (error) => {
@@ -63,23 +63,25 @@ export const EditorProvider = ({ children }) => {
   const focus = () => editorRef.current?.focus();
 
   const onSave = () => {
-    window.localStorage.removeItem(`draft-${id}`);
+    if (recipeHasChanged) {
+      window.localStorage.removeItem(`draft-${id}`);
 
-    const titleProp = editingTitle ? { title: { set: editingTitle } } : {};
-
-    updateRecipe({
-      variables: {
-        data: {
-          ...titleProp,
-          text: {
-            set: convertDraftStateToString(editorState),
+      const titleProp = editingTitle ? { title: { set: editingTitle } } : {};
+  
+      updateRecipe({
+        variables: {
+          data: {
+            ...titleProp,
+            text: {
+              set: convertDraftStateToString(editorState),
+            },
+          },
+          where: {
+            id,
           },
         },
-        where: {
-          id,
-        },
-      },
-    });
+      });
+    }
   };
 
   const onCancel = () => {
@@ -89,9 +91,12 @@ export const EditorProvider = ({ children }) => {
   };
 
   const onEdit = () => {
-    setEditorState(convertStringToDraftState(recipe.text));
+    if (recipe.text) {
+      setEditorState(convertStringToDraftState(recipe.text));
+    }
 
     setIsEditing(true);
+    setTimeout(focus, 50);
   };
 
   const value = {

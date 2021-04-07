@@ -9,6 +9,7 @@ import {
   useRecipe,
 } from 'components/edit-recipe';
 import { EditorProvider } from 'components/edit-recipe/editor-context';
+import {useGlobalKeybindings} from 'components/edit-recipe/keybindings';
 
 const ViewRecipePage = () => {
   const recipe = useRecipe();
@@ -17,6 +18,7 @@ const ViewRecipePage = () => {
   const { isEditing, focus } = useEditorContext();
 
   useEditorPersistence();
+  useGlobalKeybindings();
 
   return (
     <div className="w-screen h-screen flex flex-col bg-primary">
