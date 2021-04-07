@@ -24,13 +24,9 @@ export const useEditorPersistence = () => {
       if (draftState) {
         setEditorState(convertStringToDraftState(draftState));
         setIsEditing(true);
-      } else if (text) {
-        setEditorState(
-          convertStringToDraftState(text)
-        );
       }
     }
-  }, [id, isEditing]);
+  }, [id]);
 };
 
 
