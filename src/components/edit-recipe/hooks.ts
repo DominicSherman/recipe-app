@@ -3,7 +3,7 @@ import { useGetRecipeQuery } from 'graphql-codegen';
 import { RichUtils, EditorState, convertFromRaw } from 'draft-js';
 import { useEffect } from 'react';
 
-import { useEditorContext } from './context';
+import { useEditorContext } from './editor-context';
 
 /* TO DO
 export const useLoadFromLocalStorage = (recipeId) => {

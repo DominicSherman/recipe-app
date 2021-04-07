@@ -1,57 +1,41 @@
-import { useRecipe, convertDraftStateToString } from '.';
-import { useRouterId, useUserId } from 'utils';
-import { useEditorContext } from './context';
-import { useUpdateRecipeMutation } from 'graphql-codegen';
+import { Button } from 'components';
+import { useUserId } from 'utils';
+
+import { useRecipe } from './hooks';
+import { useEditorContext } from './editor-context';
 
 const EditButton = () => {
   const { setIsEditing } = useEditorContext();
 
   return (
-    <button
-      className="absolute top-4 right-4 btn"
-      onClick={() => setIsEditing(true)}
-    >
+    <button className="btn" onClick={() => setIsEditing(true)}>
       Edit
     </button>
   );
 };
 
 const SaveButton = () => {
-  const { editingTitle, editorState, setIsEditing } = useEditorContext();
-  const [id] = useRouterId();
-
-  const [updateRecipe] = useUpdateRecipeMutation({
-    onError: (error) => {
-      console.log('error', error);
-    },
-    onCompleted: () => {
-      setIsEditing(false);
-    },
-  });
+  const {
+    recipeHasChanged,
+    saveLoading,
+    onSave,
+    onCancel,
+  } = useEditorContext();
 
   return (
-    <button
-      className="btn absolute top-4 right-4 z-10"
-      onClick={() => {
-        const titleProp = editingTitle ? { title: { set: editingTitle } } : {};
-
-        updateRecipe({
-          variables: {
-            data: {
-              ...titleProp,
-              text: {
-                set: convertDraftStateToString(editorState),
-              },
-            },
-            where: {
-              id,
-            },
-          },
-        });
-      }}
-    >
-      Save
-    </button>
+    <>
+      <button className="btn-secondary mr-4" onClick={onCancel}>
+        Cancel
+      </button>
+      <Button
+        className="btn"
+        disabled={!recipeHasChanged}
+        loading={saveLoading}
+        onClick={onSave}
+      >
+        Save
+      </Button>
+    </>
   );
 };
 
@@ -65,9 +49,9 @@ export const EditOrSaveButton = () => {
     return null;
   }
 
-  if (!isEditing) {
-    return <EditButton />;
-  }
-
-  return <SaveButton />;
+  return (
+    <div className="absolute top-3 right-0 z-10 flex flex-row">
+      {!isEditing ? <EditButton /> : <SaveButton />}
+    </div>
+  );
 };

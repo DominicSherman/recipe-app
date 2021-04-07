@@ -16,7 +16,7 @@ export const CreateRecipeButton = () => {
     return (): void => {
       document.removeEventListener('keydown', handleKeyPress);
     };
-  });
+  }, []);
 
   return (
     <>

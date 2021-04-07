@@ -1,4 +1,4 @@
-import { useEditorContext } from './context';
+import { useEditorContext } from './editor-context';
 import { useRecipe } from './hooks';
 
 export const Title = () => {
