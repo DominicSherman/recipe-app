@@ -9,5 +9,5 @@ export const convertDraftStateToString = (draftState) =>
     ? JSON.stringify(convertToRaw(draftState.getCurrentContent()))
     : '';
 
-export const convertStringToDraftState = (draftStateText) => 
+export const convertStringToDraftState = (draftStateText) =>
   EditorState.createWithContent(convertFromRaw(JSON.parse(draftStateText)));

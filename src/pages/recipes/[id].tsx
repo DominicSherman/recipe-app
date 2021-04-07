@@ -9,7 +9,7 @@ import {
   useRecipe,
 } from 'components/edit-recipe';
 import { EditorProvider } from 'components/edit-recipe/editor-context';
-import {useGlobalKeybindings} from 'components/edit-recipe/keybindings';
+import { useGlobalKeybindings } from 'components/edit-recipe/keybindings';
 
 const ViewRecipePage = () => {
   const recipe = useRecipe();

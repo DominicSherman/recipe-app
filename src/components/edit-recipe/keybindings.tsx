@@ -1,14 +1,10 @@
-import {
-  getDefaultKeyBinding,
-  KeyBindingUtil,
-  RichUtils
-} from 'draft-js';
-import {KeyboardEvent, useEffect} from 'react';
+import { getDefaultKeyBinding, KeyBindingUtil, RichUtils } from 'draft-js';
+import { KeyboardEvent, useEffect } from 'react';
 
 import { useEditorContext } from './editor-context';
-import {useRecipe} from './hooks';
+import { useRecipe } from './hooks';
 
-const {hasCommandModifier} = KeyBindingUtil;
+const { hasCommandModifier } = KeyBindingUtil;
 
 enum KeybindingKeys {
   save = 'save',
@@ -29,7 +25,7 @@ const useKeybindingToFunction = () => {
     [KeybindingKeys.save]: onSave,
     [KeybindingKeys.cancel]: onCancel,
     [KeybindingKeys.edit]: onEdit,
-  }
+  };
 
   const getFunctionFromKeybinding = (keybinding: KeybindingKeys) => {
     return () => {
@@ -38,8 +34,8 @@ const useKeybindingToFunction = () => {
       if (func) {
         func();
       }
-    }
-  }
+    };
+  };
 
   return getFunctionFromKeybinding;
 };
@@ -96,7 +92,7 @@ export const useGlobalKeybindings = () => {
 
         return true;
       }
-      
+
       return false;
     };
 

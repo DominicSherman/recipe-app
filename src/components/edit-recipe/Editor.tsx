@@ -2,10 +2,8 @@ import DraftEditor from '@draft-js-plugins/editor';
 import React from 'react';
 
 import { useEditorContext } from './editor-context';
-import {
-  useSetEditingRecipeTitle,
-} from './hooks';
-import {useHandleKeyCommand, useKeybindingFunction} from './keybindings';
+import { useSetEditingRecipeTitle } from './hooks';
+import { useHandleKeyCommand, useKeybindingFunction } from './keybindings';
 import { plugins } from './plugins';
 
 export const Editor = () => {
@@ -19,8 +17,8 @@ export const Editor = () => {
     <DraftEditor
       editorKey="SimpleInlineToolbarEditor"
       editorState={editorState}
-      keyBindingFn={keybindingFunction}
       handleKeyCommand={handleKeyCommand}
+      keyBindingFn={keybindingFunction}
       onChange={onChange}
       plugins={plugins}
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
