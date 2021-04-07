@@ -5,10 +5,10 @@ import { useRecipe } from './hooks';
 import { useEditorContext } from './editor-context';
 
 const EditButton = () => {
-  const { setIsEditing } = useEditorContext();
+  const { onEdit } = useEditorContext();
 
   return (
-    <button className="btn" onClick={() => setIsEditing(true)}>
+    <button className="btn" onClick={onEdit}>
       Edit
     </button>
   );

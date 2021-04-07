@@ -1,4 +1,4 @@
-import { convertFromRaw, convertToRaw } from 'draft-js';
+import { convertToRaw, EditorState, convertFromRaw } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 
 export const convertDraftStateTextToHtml = (draftStateText) =>
@@ -8,3 +8,6 @@ export const convertDraftStateToString = (draftState) =>
   draftState
     ? JSON.stringify(convertToRaw(draftState.getCurrentContent()))
     : '';
+
+export const convertStringToDraftState = (draftStateText) => 
+  EditorState.createWithContent(convertFromRaw(JSON.parse(draftStateText)));

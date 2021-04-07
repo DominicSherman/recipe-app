@@ -3,8 +3,6 @@ import React from 'react';
 
 import { useEditorContext } from './editor-context';
 import {
-  useDefaultDraftState,
-  useRecipe,
   useSetEditingRecipeTitle,
 } from './hooks';
 import {useHandleKeyCommand, useKeybindingFunction} from './keybindings';
@@ -14,10 +12,8 @@ export const Editor = () => {
   const { editorState, onChange, editorRef } = useEditorContext();
   const handleKeyCommand = useHandleKeyCommand();
   const keybindingFunction = useKeybindingFunction();
-  const recipe = useRecipe();
 
-  useSetEditingRecipeTitle(recipe.title);
-  useDefaultDraftState(recipe.text);
+  useSetEditingRecipeTitle();
 
   return (
     <DraftEditor

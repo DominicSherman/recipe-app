@@ -4,7 +4,7 @@ import React, { useContext, useState } from 'react';
 import { useRef } from 'react';
 import { useRouterId } from 'utils';
 import { useRecipe } from './hooks';
-import { convertDraftStateToString } from './utils';
+import { convertDraftStateToString, convertStringToDraftState } from './utils';
 
 const EditorContext = React.createContext<{
   isEditing: boolean;
@@ -20,6 +20,7 @@ const EditorContext = React.createContext<{
   saveLoading: boolean;
   onSave: () => void;
   onCancel: () => void;
+  onEdit: () => void;
 }>({
   isEditing: false,
   setIsEditing: () => ({}),
@@ -34,6 +35,7 @@ const EditorContext = React.createContext<{
   saveLoading: false,
   onSave: () => ({}),
   onCancel: () => ({}),
+  onEdit: () => ({}),
 });
 
 export const EditorProvider = ({ children }) => {
@@ -55,10 +57,14 @@ export const EditorProvider = ({ children }) => {
     },
   });
 
-  const onChange = (value) => setEditorState(value);
+  const onChange = (value) => {
+    setEditorState(value);
+  };
   const focus = () => editorRef.current?.focus();
 
   const onSave = () => {
+    window.localStorage.removeItem(`draft-${id}`);
+
     const titleProp = editingTitle ? { title: { set: editingTitle } } : {};
 
     updateRecipe({
@@ -77,7 +83,15 @@ export const EditorProvider = ({ children }) => {
   };
 
   const onCancel = () => {
+    window.localStorage.removeItem(`draft-${id}`);
+    
     setIsEditing(false);
+  };
+
+  const onEdit = () => {
+    setEditorState(convertStringToDraftState(recipe.text));
+
+    setIsEditing(true);
   };
 
   const value = {
@@ -93,6 +107,7 @@ export const EditorProvider = ({ children }) => {
     saveLoading,
     onCancel,
     onSave,
+    onEdit,
     recipeHasChanged,
   };
 
