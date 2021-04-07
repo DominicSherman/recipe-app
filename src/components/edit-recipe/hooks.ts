@@ -7,7 +7,14 @@ import { convertDraftStateToString, convertStringToDraftState } from './utils';
 
 export const useEditorPersistence = () => {
   const [id] = useRouterId();
-  const {editorState, isEditing, setEditorState, setIsEditing} = useEditorContext();
+
+  const {
+    editorState,
+    isEditing,
+    setEditorState,
+    setIsEditing,
+  } = useEditorContext();
+
   const key = `draft-${id}`;
 
   useEffect(() => {
@@ -28,10 +35,9 @@ export const useEditorPersistence = () => {
   }, [id]);
 };
 
-
 export const useSetEditingRecipeTitle = () => {
   const { setEditingTitle, editingTitle } = useEditorContext();
-  const {title} = useRecipe();
+  const { title } = useRecipe();
 
   useEffect(() => {
     if (title && title !== editingTitle) {
