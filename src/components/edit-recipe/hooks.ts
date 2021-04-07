@@ -1,69 +1,49 @@
-import {
-  convertFromRaw,
-  EditorState
-} from 'draft-js';
 import { useGetRecipeQuery } from 'graphql-codegen';
 import { useEffect } from 'react';
 import { useRouterId } from 'utils';
 
 import { useEditorContext } from './editor-context';
+import { convertDraftStateToString, convertStringToDraftState } from './utils';
 
-/* TO DO
-export const useLoadFromLocalStorage = (recipeId) => {
-  const { setEditorState } = useEditorContext();
+export const useEditorPersistence = () => {
+  const [id] = useRouterId();
+  const {editorState, isEditing, setEditorState, setIsEditing} = useEditorContext();
+  const {text} = useRecipe();
+  const key = `draft-${id}`;
 
   useEffect(() => {
-    if (recipeId) {
-      const storeRaw = window.localStorage.getItem(`draft-${recipeId}`);
-
-      const content = storeRaw
-        ? EditorState.createWithContent(convertFromRaw(JSON.parse(storeRaw)))
-        : createEditorStateWithText('');
-
-      setEditorState(content);
+    if (id && isEditing) {
+      window.localStorage.setItem(key, convertDraftStateToString(editorState));
     }
+  }, [id, isEditing, editorState]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [recipeId]);
+  useEffect(() => {
+    if (id) {
+      const draftState = window.localStorage.getItem(key);
+
+      if (draftState) {
+        setEditorState(convertStringToDraftState(draftState));
+        setIsEditing(true);
+      } else if (text) {
+        setEditorState(
+          convertStringToDraftState(text)
+        );
+      }
+    }
+  }, [id, isEditing]);
 };
 
-export const useSetLocalStorage = (recipeId) => {
-  const { editorState } = useEditorContext();
 
-  useEffect(() => {
-    if (recipeId) {
-      const contentState = editorState.getCurrentContent();
-      const rawContent = convertToRaw(contentState);
-      window.localStorage.setItem(
-        `draft-${recipeId}`,
-        JSON.stringify(rawContent)
-      );
-    }
-  }, [editorState, recipeId]);
-}; 
-*/
-
-export const useDefaultDraftState = (text) => {
-  const { setEditorState } = useEditorContext();
-
-  useEffect(() => {
-    if (text) {
-      setEditorState(
-        EditorState.createWithContent(convertFromRaw(JSON.parse(text)))
-      );
-    }
-  }, [text, setEditorState]);
-};
-
-export const useSetEditingRecipeTitle = (recipeTitle) => {
+export const useSetEditingRecipeTitle = () => {
   const { setEditingTitle, editingTitle } = useEditorContext();
+  const {title} = useRecipe();
 
   useEffect(() => {
-    if (recipeTitle && recipeTitle !== editingTitle) {
-      setEditingTitle(recipeTitle);
+    if (title && title !== editingTitle) {
+      setEditingTitle(title);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [recipeTitle, setEditingTitle]);
+  }, [title, setEditingTitle]);
 };
 
 export const useRecipe = () => {

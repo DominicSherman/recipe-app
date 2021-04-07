@@ -5,6 +5,7 @@ import {
   EditOrSaveButton,
   Title,
   useEditorContext,
+  useEditorPersistence,
   useRecipe,
 } from 'components/edit-recipe';
 import { EditorProvider } from 'components/edit-recipe/editor-context';
@@ -14,6 +15,8 @@ const ViewRecipePage = () => {
   const htmlText = convertDraftStateTextToHtml(recipe.text);
 
   const { isEditing, focus } = useEditorContext();
+
+  useEditorPersistence();
 
   return (
     <div className="w-screen h-screen flex flex-col bg-primary">

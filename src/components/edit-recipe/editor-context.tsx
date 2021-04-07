@@ -55,10 +55,14 @@ export const EditorProvider = ({ children }) => {
     },
   });
 
-  const onChange = (value) => setEditorState(value);
+  const onChange = (value) => {
+    setEditorState(value);
+  };
   const focus = () => editorRef.current?.focus();
 
   const onSave = () => {
+    window.localStorage.removeItem(`draft-${id}`);
+
     const titleProp = editingTitle ? { title: { set: editingTitle } } : {};
 
     updateRecipe({
@@ -77,6 +81,8 @@ export const EditorProvider = ({ children }) => {
   };
 
   const onCancel = () => {
+    window.localStorage.removeItem(`draft-${id}`);
+    
     setIsEditing(false);
   };
 
