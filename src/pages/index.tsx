@@ -57,7 +57,7 @@ const RecipeItem = ({
   });
 
   return (
-    <div className="w-96 m-4 flex flex-row justify-between items-center">
+    <div className="w-full max-w-lg p-4 flex flex-row justify-between items-center">
       <Link href={`recipes/${recipe.id}`}>
         <a className="card" href="#">
           {recipe.title}

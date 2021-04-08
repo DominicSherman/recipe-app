@@ -23,7 +23,7 @@ const ViewRecipePage = () => {
   return (
     <div className="w-screen h-screen flex flex-col bg-primary">
       <NavBar />
-      <div className="w-full flex flex-col items-center">
+      <div className="w-full flex flex-col items-center p-4">
         {recipe ? (
           <div className="relative pt-16 flex flex-col justify-center w-full max-w-2xl">
             <EditOrSaveButton />
