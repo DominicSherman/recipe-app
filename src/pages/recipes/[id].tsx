@@ -29,7 +29,7 @@ const ViewRecipePage = () => {
             <EditOrSaveButton />
             <Title />
             <div
-              className={`w-full relative p-4 min-h-[600px] ${
+              className={`w-full relative p-4 min-h-[500px] ${
                 isEditing ? 'bg-white cursor-text rounded-md' : ''
               }`}
               onClick={focus}
