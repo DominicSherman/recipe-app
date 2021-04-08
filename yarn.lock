@@ -1254,13 +1254,14 @@
     immutable "~3.7.4"
     prop-types "^15.5.8"
 
-"@draft-js-plugins/inline-toolbar@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@draft-js-plugins/inline-toolbar/-/inline-toolbar-4.1.1.tgz#c697fea474e391bfc167b03229f2c23ab03aeb11"
-  integrity sha512-YS3aN5d262j1eYSUctIcsWb1GYyoWn4sZdszbsf9+kJP7+jlTknp0D2s7ShBRKF2UNLrC2i8D3Z8lHyXEJkByw==
+"@draft-js-plugins/static-toolbar@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@draft-js-plugins/static-toolbar/-/static-toolbar-4.1.0.tgz#b6dcbc18bd2f187ea26b44013076a998b0a8e2bd"
+  integrity sha512-p1oPopV/svcifwMOaOwLsQi37oZIv7UX9TTbVkpwYAAQ73Nws630Imm92tyEMy7bU5nxZ4PxiVMZ018MiGydlA==
   dependencies:
     "@draft-js-plugins/buttons" "^4.0.0"
     "@draft-js-plugins/utils" "^4.0.0"
+    prop-types "^15.5.8"
 
 "@draft-js-plugins/utils@^4.0.0":
   version "4.1.0"
