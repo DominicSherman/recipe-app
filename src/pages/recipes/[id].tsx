@@ -1,5 +1,5 @@
-import { NavBar } from 'components';
 import {
+  Page,
   convertDraftStateTextToHtml,
   Editor,
   EditOrSaveButton,
@@ -7,8 +7,8 @@ import {
   useEditorContext,
   useEditorPersistence,
   useRecipe,
-} from 'components/edit-recipe';
-import { EditorProvider } from 'components/edit-recipe/editor-context';
+  EditorProvider,
+} from 'components';
 import { useGlobalKeybindings } from 'components/edit-recipe/keybindings';
 
 const ViewRecipePage = () => {
@@ -21,12 +21,18 @@ const ViewRecipePage = () => {
   useGlobalKeybindings();
 
   return (
-    <div className="w-screen h-screen flex flex-col bg-primary">
-      <NavBar />
+    <Page>
       <div className="w-full flex flex-col items-center p-4">
         {recipe ? (
-          <div className="relative pt-16 flex flex-col justify-center w-full max-w-2xl">
+          <div className="relative pt-16 flex flex-col justify-center w-full max-w-3xl">
             <EditOrSaveButton />
+            <div className="w-full h-[300px] md:h-[500px] overflow-hidden">
+              <img
+                alt="recipe"
+                className="w-full h-full object-cover"
+                src="/header-image.jpg"
+              />
+            </div>
             <Title />
             <div
               className={`w-full relative p-4 min-h-[500px] ${
@@ -48,7 +54,7 @@ const ViewRecipePage = () => {
           </div>
         )}
       </div>
-    </div>
+    </Page>
   );
 };
 

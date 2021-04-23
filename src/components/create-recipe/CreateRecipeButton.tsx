@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/client';
 import { CreateRecipeModal } from './CreateRecipeModal';
 
 export const CreateRecipeButton = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [session] = useSession();
 
   useEffect(() => {
     const handleKeyPress = (event): void => {
-      if (event.key === 'c') {
-        setIsOpen(true);
+      if (session) {
+        if (event.key === 'c') {
+          setIsOpen(true);
+        }
       }
     };
 
@@ -17,6 +21,10 @@ export const CreateRecipeButton = () => {
       document.removeEventListener('keydown', handleKeyPress);
     };
   }, []);
+
+  if (!session) {
+    return null;
+  }
 
   return (
     <>
