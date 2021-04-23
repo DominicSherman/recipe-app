@@ -1,11 +1,11 @@
-import { CreateRecipeButton, NavBar, Page } from 'components';
-import Link from 'next/link';
-import { useUserId } from 'utils';
+import { CreateRecipeButton, Page } from 'components';
 import {
   Recipe,
   useDeleteOneRecipeMutation,
   useGetUserAndRecipesQuery,
 } from 'graphql-codegen';
+import Link from 'next/link';
+import { useUserId } from 'utils';
 
 export default function Home() {
   const userId = useUserId();
