@@ -1,4 +1,4 @@
-import { CreateRecipeButton, NavBar } from 'components';
+import { CreateRecipeButton, NavBar, Page } from 'components';
 import Link from 'next/link';
 import { useUserId } from 'utils';
 import {
@@ -25,8 +25,7 @@ export default function Home() {
   });
 
   return (
-    <div className="w-screen h-screen flex flex-col bg-primary">
-      <NavBar />
+    <Page>
       <div className="w-full">
         <div className="max-w-7xl w-full mx-auto py-4">
           <CreateRecipeButton />
@@ -39,7 +38,7 @@ export default function Home() {
           <RecipeItem recipe={recipe} />
         ))}
       </div>
-    </div>
+    </Page>
   );
 }
 

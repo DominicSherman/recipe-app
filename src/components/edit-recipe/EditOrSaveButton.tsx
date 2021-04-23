@@ -10,6 +10,7 @@ const EditButton = () => {
   return (
     <button className="btn" onClick={onEdit}>
       Edit
+      <kbd className="key">⌘E</kbd>
     </button>
   );
 };
@@ -26,6 +27,7 @@ const SaveButton = () => {
     <>
       <button className="btn-secondary mr-4" onClick={onCancel}>
         Cancel
+        <kbd className="key">Esc</kbd>
       </button>
       <Button
         className="btn"
@@ -34,6 +36,7 @@ const SaveButton = () => {
         onClick={onSave}
       >
         Save
+        <kbd className="key">⌘S</kbd>
       </Button>
     </>
   );
