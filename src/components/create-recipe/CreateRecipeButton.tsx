@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/client';
 import { CreateRecipeModal } from './CreateRecipeModal';
+import { Button } from 'components/generic';
 
 export const CreateRecipeButton = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,15 +28,15 @@ export const CreateRecipeButton = () => {
   }
 
   return (
-    <>
-      <button
+    <div className="flex justify-self-start">
+      <Button
         className="btn p-2 ml-4 flex flex-row"
+        keyboardShortcut="C"
         onClick={() => setIsOpen(true)}
       >
         Create Recipe
-        <kbd className="key">C</kbd>
-      </button>
+      </Button>
       <CreateRecipeModal isOpen={isOpen} setIsOpen={setIsOpen} />
-    </>
+    </div>
   );
 };

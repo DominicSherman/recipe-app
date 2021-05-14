@@ -1,7 +1,8 @@
 @import './components/buttons.css';
+@import './components/tooltip.css';
 
 .key {
-  @apply bg-gray-500 ml-2 rounded-md py-0.5 px-2 text-sm shadow-lg border border-gray-600;
+  @apply bg-gray-800 rounded-md py-1 px-2 text-xs shadow-lg border border-gray-600 text-white;
 }
 
 .hr {
