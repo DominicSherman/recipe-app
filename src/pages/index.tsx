@@ -34,9 +34,11 @@ export default function Home() {
       <div className="flex flex-col justify-center items-center w-full">
         <h1>My Recipes</h1>
         <div className="hr" />
-        {data?.recipes.map((recipe) => (
-          <RecipeItem recipe={recipe} />
-        ))}
+        <div className="max-w-xl grid grid-flow-row grid-cols-3">
+          {data?.recipes.map((recipe) => (
+            <RecipeItem recipe={recipe} />
+          ))}
+        </div>
       </div>
     </Page>
   );
@@ -56,13 +58,14 @@ const RecipeItem = ({
   });
 
   return (
-    <div className="w-full max-w-lg p-4 flex flex-row justify-between items-center">
-      <Link href={`recipes/${recipe.id}`}>
-        <a className="card" href="#">
-          {recipe.title}
-        </a>
-      </Link>
-      <button className="btn-secondary" onClick={() => deleteRecipe()}>
+    <Link href={`recipes/${recipe.id}`}>
+      <a>
+        <div className="relative w-[150px] h-[100px] p-4 m-2 flex flex-col items-center justify-center rounded-lg shadow-md bg-tertiary filter overflow-hidden">
+          <h3 className="text-white z-10">{recipe.title}</h3>
+        </div>
+      </a>
+    </Link>
+    /* <button className="btn-secondary" onClick={() => deleteRecipe()}>
         <svg
           className="h-6 w-6"
           fill="none"
@@ -77,7 +80,6 @@ const RecipeItem = ({
             strokeWidth={2}
           />
         </svg>
-      </button>
-    </div>
+      </button> */
   );
 };

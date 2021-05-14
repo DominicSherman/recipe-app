@@ -3,17 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  a {
-    @apply text-primary;
-  }
-
   h1 {
     @apply text-4xl font-extrabold;
   }
@@ -44,7 +33,7 @@
   }
 
   body {
-    @apply bg-primary;
+    @apply bg-primary text-primary;
   }
 }
 

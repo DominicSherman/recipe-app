@@ -2,7 +2,7 @@
 @import './components/tooltip.css';
 
 .key {
-  @apply bg-gray-800 rounded-md py-1 px-2 text-xs shadow-lg border border-gray-600 text-white;
+  @apply bg-tertiary rounded-md py-1 px-2 text-xs shadow-lg border border-gray-600 text-white;
 }
 
 .hr {
