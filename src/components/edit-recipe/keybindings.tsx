@@ -107,5 +107,5 @@ export const useGlobalKeybindings = () => {
     return (): void => {
       document.removeEventListener('keydown', handleKeyPress);
     };
-  }, [recipe]);
+  }, [getFunctionFromKeybinding, recipe]);
 };

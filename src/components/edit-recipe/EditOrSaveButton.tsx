@@ -1,17 +1,20 @@
 import { Button } from 'components';
 import { useUserId } from 'utils';
 
-import { useRecipe } from './hooks';
 import { useEditorContext } from './editor-context';
+import { useRecipe } from './hooks';
 
 const EditButton = () => {
   const { onEdit } = useEditorContext();
 
   return (
-    <button className="btn" onClick={onEdit}>
+    <Button
+      className="btn :group-hover:flex"
+      keyboardShortcut="⌘E"
+      onClick={onEdit}
+    >
       Edit
-      <kbd className="key">⌘E</kbd>
-    </button>
+    </Button>
   );
 };
 
@@ -25,18 +28,21 @@ const SaveButton = () => {
 
   return (
     <>
-      <button className="btn-secondary mr-4" onClick={onCancel}>
+      <Button
+        className="btn-secondary mr-4"
+        keyboardShortcut="Esc"
+        onClick={onCancel}
+      >
         Cancel
-        <kbd className="key">Esc</kbd>
-      </button>
+      </Button>
       <Button
         className="btn"
         disabled={!recipeHasChanged}
+        keyboardShortcut="⌘S"
         loading={saveLoading}
         onClick={onSave}
       >
         Save
-        <kbd className="key">⌘S</kbd>
       </Button>
     </>
   );
