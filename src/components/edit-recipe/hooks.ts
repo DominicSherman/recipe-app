@@ -21,7 +21,7 @@ export const useEditorPersistence = () => {
     if (id && isEditing) {
       window.localStorage.setItem(key, convertDraftStateToString(editorState));
     }
-  }, [id, isEditing, editorState]);
+  }, [id, isEditing, editorState, key]);
 
   useEffect(() => {
     if (id) {
@@ -32,7 +32,7 @@ export const useEditorPersistence = () => {
         setIsEditing(true);
       }
     }
-  }, [id]);
+  }, [id, key, setEditorState, setIsEditing]);
 };
 
 export const useSetEditingRecipeTitle = () => {

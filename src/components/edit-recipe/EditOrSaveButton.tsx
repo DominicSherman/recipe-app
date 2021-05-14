@@ -1,4 +1,4 @@
-import { Button, Tooltip } from 'components';
+import { Button } from 'components';
 import { useUserId } from 'utils';
 
 import { useEditorContext } from './editor-context';
