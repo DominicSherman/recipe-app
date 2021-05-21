@@ -83,21 +83,21 @@ export const EditorProvider = ({ children }) => {
     if (recipeHasChanged) {
       window.localStorage.removeItem(`draft-${id}`);
 
-      console.log({ editingDescription });
-      const titleProp = editingTitle ? { title: { set: editingTitle } } : {};
-      const cookTimeProp = editingCookTime
-        ? { cookTime: { set: editingCookTime } }
-        : {};
-      const descriptionProp = editingDescription
-        ? { description: { set: editingDescription } }
-        : {};
+      // console.log({ editingDescription });
+      // const titleProp = editingTitle ? { title: { set: editingTitle } } : {};
+      // const cookTimeProp = editingCookTime
+      //   ? { cookTime: { set: editingCookTime } }
+      //   : {};
+      // const descriptionProp = editingDescription
+      //   ? { description: { set: editingDescription } }
+      //   : {};
 
       updateRecipe({
         variables: {
           data: {
-            ...titleProp,
-            ...cookTimeProp,
-            ...descriptionProp,
+            // ...titleProp,
+            // ...cookTimeProp,
+            // ...descriptionProp,
             text: {
               set: convertDraftStateToString(editorState),
             },

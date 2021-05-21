@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { useS3Upload } from 'next-s3-upload';
 
 import { useEditorContext } from './editor-context';

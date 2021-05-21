@@ -7,7 +7,7 @@ export default function UploadTest() {
 
   const handleFileChange = async (file) => {
     console.log('file', file);
-    const { url } = await uploadToS3(file);
+    const { url } = await uploadToS3(file, { foo: 'foo' });
 
     console.log('url', url);
     setImageUrl(url);

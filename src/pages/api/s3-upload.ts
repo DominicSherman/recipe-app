@@ -1,9 +1,9 @@
 import { APIRoute } from 'next-s3-upload';
 
 export default APIRoute.configure({
-  key(req, filename) {
-    console.log('req', req);
+  key(req, filename, additionalData?: { id: string }) {
+    console.log({ additionalData });
 
-    return `${filename.toUpperCase()}`;
+    return `recipes/${additionalData?.id}/${filename.toUpperCase()}`;
   },
 });
