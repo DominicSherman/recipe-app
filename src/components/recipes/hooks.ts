@@ -83,6 +83,8 @@ export const useRecipe = () => {
 
   if (!data?.recipe) {
     return {
+      headerImageUrl: null,
+      serveCount: null,
       cookTime: null,
       description: null,
       title: '',

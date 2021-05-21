@@ -12,7 +12,7 @@ export const Button = ({
   keyboardShortcut,
   ...props
 }: IButtonProps) => {
-  const className = `${props.className} ${loading ? 'btn-loading' : ''} ${
+  const className = `btn ${props.className} ${loading ? 'btn-loading' : ''} ${
     disabled ? 'btn-disabled' : ''
   }`;
 

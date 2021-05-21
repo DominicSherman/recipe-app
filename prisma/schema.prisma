@@ -65,15 +65,17 @@ model VerificationRequest {
 }
 
 model Recipe {
-  id          String   @id @default(uuid())
-  title       String
-  text        String?
-  userId      Int      @map(name: "user_id")
-  user        User     @relation(fields: [userId], references: [id])
-  createdAt   DateTime @default(now()) @map(name: "created_at")
-  updatedAt   DateTime @default(now()) @map(name: "updated_at")
-  cookTime    String?
-  description String?
+  id             String   @id @default(uuid())
+  userId         Int      @map(name: "user_id")
+  user           User     @relation(fields: [userId], references: [id])
+  createdAt      DateTime @default(now()) @map(name: "created_at")
+  updatedAt      DateTime @default(now()) @map(name: "updated_at")
+  title          String
+  text           String?
+  cookTime       String?
+  description    String?
+  serveCount     String?
+  headerImageUrl String?
 
   @@map(name: "recipes")
 }

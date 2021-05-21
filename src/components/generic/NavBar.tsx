@@ -14,7 +14,7 @@ export const NavBar = () => {
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <Link href="/">
-                  <a className="text-primary text-xl font-medium">
+                  <a className="text-primary text-3xl font-extrabold font-satisfy">
                     {Options.APP_TITLE}
                   </a>
                 </Link>
