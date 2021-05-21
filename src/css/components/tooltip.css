@@ -1,0 +1,7 @@
+.tooltip {
+  @apply absolute bottom-2 left-16;
+
+  opacity: 1;
+  transform: scale3d(1, 1, 1);
+  transition: all 0.2s ease-in-out;
+}

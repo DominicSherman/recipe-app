@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/client';
 
 import { useCreateOneRecipeMutation } from 'graphql-codegen';
 import { Modal } from 'components';
+import { Button } from 'components/generic';
 
 export const CreateRecipeModal = ({ isOpen, setIsOpen }) => {
   const router = useRouter();
@@ -74,19 +75,21 @@ export const CreateRecipeModal = ({ isOpen, setIsOpen }) => {
             />
           </div>
           <div className="w-full flex flex-row justify-between">
-            <button
+            <Button
               className="btn-secondary btn-wide"
+              keyboardShortcut="Esc"
               onClick={() => setIsOpen(false)}
               type="button"
             >
               Cancel
-            </button>
-            <button
+            </Button>
+            <Button
               className={`btn btn-wide ${loading && 'btn-loading'}`}
+              keyboardShortcut="Enter"
               type="submit"
             >
               Create
-            </button>
+            </Button>
           </div>
         </form>
       </div>

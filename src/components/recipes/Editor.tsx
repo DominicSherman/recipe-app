@@ -3,7 +3,7 @@ import React from 'react';
 import '@draft-js-plugins/static-toolbar/lib/plugin.css';
 
 import { useEditorContext } from './editor-context';
-import { useSetEditingRecipeTitle } from './hooks';
+import { useSetEditingRecipeInfo } from './hooks';
 import { useHandleKeyCommand, useKeybindingFunction } from './keybindings';
 import { plugins, Toolbar, Separator } from './plugins';
 import {
@@ -21,7 +21,7 @@ export const Editor = () => {
   const handleKeyCommand = useHandleKeyCommand();
   const keybindingFunction = useKeybindingFunction();
 
-  useSetEditingRecipeTitle();
+  useSetEditingRecipeInfo();
 
   return (
     <div className="editor">

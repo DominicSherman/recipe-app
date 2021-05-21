@@ -21,7 +21,7 @@ export const useEditorPersistence = () => {
     if (id && isEditing) {
       window.localStorage.setItem(key, convertDraftStateToString(editorState));
     }
-  }, [id, isEditing, editorState]);
+  }, [id, isEditing, editorState, key]);
 
   useEffect(() => {
     if (id) {
@@ -32,19 +32,42 @@ export const useEditorPersistence = () => {
         setIsEditing(true);
       }
     }
-  }, [id]);
+  }, [id, key, setEditorState, setIsEditing]);
 };
 
-export const useSetEditingRecipeTitle = () => {
-  const { setEditingTitle, editingTitle } = useEditorContext();
-  const { title } = useRecipe();
+export const useSetEditingRecipeInfo = () => {
+  const {
+    setEditingTitle,
+    editingTitle,
+    setEditingCookTime,
+    editingCookTime,
+    setEditingDescription,
+    editingDescription,
+  } = useEditorContext();
+  const { cookTime, description, title } = useRecipe();
 
   useEffect(() => {
     if (title && title !== editingTitle) {
       setEditingTitle(title);
     }
+
+    if (cookTime && cookTime !== editingCookTime) {
+      setEditingCookTime(cookTime);
+    }
+
+    if (description && description !== editingDescription) {
+      setEditingDescription(description);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title, setEditingTitle]);
+  }, [
+    title,
+    setEditingTitle,
+    cookTime,
+    setEditingCookTime,
+    description,
+    setEditingDescription,
+  ]);
 };
 
 export const useRecipe = () => {
@@ -60,6 +83,8 @@ export const useRecipe = () => {
 
   if (!data?.recipe) {
     return {
+      cookTime: null,
+      description: null,
       title: '',
       text: '',
       userId: '',
