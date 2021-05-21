@@ -11,6 +11,8 @@ export const Recipe = objectType({
     t.model.user();
     t.model.createdAt();
     t.model.updatedAt();
+    t.model.cookTime();
+    t.model.description();
   },
 });
 

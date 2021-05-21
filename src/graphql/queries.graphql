@@ -1,0 +1,17 @@
+query getRecipe($where: RecipeWhereUniqueInput!) {
+  recipe(where: $where) {
+    ...RecipeFragment
+  }
+}
+
+query getUserAndRecipes(
+    $whereUser: UserWhereUniqueInput!
+    $whereRecipes: RecipeWhereInput!
+) {
+  user(where: $whereUser) {
+    ...UserFragment
+  }
+  recipes(where: $whereRecipes) {
+    ...RecipeFragment
+  }
+}

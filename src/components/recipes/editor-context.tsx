@@ -11,6 +11,10 @@ const EditorContext = React.createContext<{
   setIsEditing: (v: boolean) => void;
   editingTitle: string;
   setEditingTitle: (v: string) => void;
+  editingCookTime: string;
+  setEditingCookTime: (v: string) => void;
+  editingDescription: string;
+  setEditingDescription: (v: string) => void;
   editorState: any;
   setEditorState: (v: any) => void;
   editorRef: any | null;
@@ -26,6 +30,10 @@ const EditorContext = React.createContext<{
   setIsEditing: () => ({}),
   editingTitle: '',
   setEditingTitle: () => ({}),
+  editingCookTime: '',
+  setEditingCookTime: () => ({}),
+  editingDescription: '',
+  setEditingDescription: () => ({}),
   editorState: createEditorStateWithText(''),
   setEditorState: () => ({}),
   editorRef: null,
@@ -42,13 +50,24 @@ export const EditorProvider = ({ children }) => {
   const [id] = useRouterId();
   const [isEditing, setIsEditing] = useState(false);
   const [editingTitle, setEditingTitle] = useState('');
+  const [editingDescription, setEditingDescription] = useState('');
+  const [editingCookTime, setEditingCookTime] = useState('');
   const [editorState, setEditorState] = useState(createEditorStateWithText(''));
   const editorRef = useRef<any | null>();
   const editorStateAsString = convertDraftStateToString(editorState);
   const recipe = useRecipe();
+  const recipeTextHasChanged = editorStateAsString !== recipe.text;
+  const recipeTitleHasChanged = editingTitle !== recipe.title;
+  const recipeDescriptionhasChanged =
+    editingDescription !== recipe.description && editingDescription !== '';
+  const recipeCookTimeHasChanged =
+    editingCookTime !== recipe.cookTime && editingCookTime !== '';
 
   const recipeHasChanged =
-    editorStateAsString !== recipe.text || editingTitle !== recipe.title;
+    recipeTextHasChanged ||
+    recipeTitleHasChanged ||
+    recipeDescriptionhasChanged ||
+    recipeCookTimeHasChanged;
 
   const [updateRecipe, { loading: saveLoading }] = useUpdateRecipeMutation({
     onError: (error) => {
@@ -69,12 +88,21 @@ export const EditorProvider = ({ children }) => {
     if (recipeHasChanged) {
       window.localStorage.removeItem(`draft-${id}`);
 
+      console.log({ editingDescription });
       const titleProp = editingTitle ? { title: { set: editingTitle } } : {};
+      const cookTimeProp = editingCookTime
+        ? { cookTime: { set: editingCookTime } }
+        : {};
+      const descriptionProp = editingDescription
+        ? { description: { set: editingDescription } }
+        : {};
 
       updateRecipe({
         variables: {
           data: {
             ...titleProp,
+            ...cookTimeProp,
+            ...descriptionProp,
             text: {
               set: convertDraftStateToString(editorState),
             },
@@ -117,6 +145,10 @@ export const EditorProvider = ({ children }) => {
     onSave,
     onEdit,
     recipeHasChanged,
+    editingCookTime,
+    setEditingCookTime,
+    editingDescription,
+    setEditingDescription,
   };
 
   return (

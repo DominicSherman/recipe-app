@@ -1,0 +1,20 @@
+mutation updateRecipe(
+  $data: RecipeUpdateInput!
+  $where: RecipeWhereUniqueInput!
+) {
+  updateOneRecipe(data: $data, where: $where) {
+    ...RecipeFragment
+  }
+}
+
+mutation createOneRecipe($data: RecipeCreateInput!) {
+  createOneRecipe(data: $data) {
+    id
+  }
+}
+
+mutation deleteOneRecipe($where: RecipeWhereUniqueInput!) {
+  deleteOneRecipe(where: $where) {
+    id
+  }
+}

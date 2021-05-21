@@ -186,7 +186,9 @@ export enum QueryMode {
 /** A Recipe */
 export type Recipe = {
   __typename?: 'Recipe';
+  cookTime?: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
+  description?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   text?: Maybe<Scalars['String']>;
   title: Scalars['String'];
@@ -196,7 +198,9 @@ export type Recipe = {
 };
 
 export type RecipeCreateInput = {
+  cookTime?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   text?: Maybe<Scalars['String']>;
   title: Scalars['String'];
@@ -211,7 +215,9 @@ export type RecipeListRelationFilter = {
 };
 
 export type RecipeUpdateInput = {
+  cookTime?: Maybe<NullableStringFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  description?: Maybe<NullableStringFieldUpdateOperationsInput>;
   id?: Maybe<StringFieldUpdateOperationsInput>;
   text?: Maybe<NullableStringFieldUpdateOperationsInput>;
   title?: Maybe<StringFieldUpdateOperationsInput>;
@@ -223,7 +229,9 @@ export type RecipeWhereInput = {
   AND?: Maybe<Array<RecipeWhereInput>>;
   NOT?: Maybe<Array<RecipeWhereInput>>;
   OR?: Maybe<Array<RecipeWhereInput>>;
+  cookTime?: Maybe<StringNullableFilter>;
   createdAt?: Maybe<DateTimeFilter>;
+  description?: Maybe<StringNullableFilter>;
   id?: Maybe<StringFilter>;
   text?: Maybe<StringNullableFilter>;
   title?: Maybe<StringFilter>;
@@ -343,17 +351,14 @@ export type UserWhereUniqueInput = {
   id?: Maybe<Scalars['Int']>;
 };
 
-export type GetRecipeQueryVariables = Exact<{
-  where: RecipeWhereUniqueInput;
-}>;
+export type RecipeFragmentFragment = (
+  { __typename?: 'Recipe' }
+  & Pick<Recipe, 'id' | 'userId' | 'title' | 'text' | 'cookTime' | 'description'>
+);
 
-
-export type GetRecipeQuery = (
-  { __typename?: 'Query' }
-  & { recipe?: Maybe<(
-    { __typename?: 'Recipe' }
-    & Pick<Recipe, 'id' | 'userId' | 'title' | 'text'>
-  )> }
+export type UserFragmentFragment = (
+  { __typename?: 'User' }
+  & Pick<User, 'createdAt' | 'email' | 'emailVerified' | 'id' | 'image' | 'name' | 'updatedAt'>
 );
 
 export type UpdateRecipeMutationVariables = Exact<{
@@ -366,7 +371,7 @@ export type UpdateRecipeMutation = (
   { __typename?: 'Mutation' }
   & { updateOneRecipe?: Maybe<(
     { __typename?: 'Recipe' }
-    & Pick<Recipe, 'id' | 'userId' | 'title' | 'text'>
+    & RecipeFragmentFragment
   )> }
 );
 
@@ -383,23 +388,6 @@ export type CreateOneRecipeMutation = (
   ) }
 );
 
-export type GetUserAndRecipesQueryVariables = Exact<{
-  whereUser: UserWhereUniqueInput;
-  whereRecipes: RecipeWhereInput;
-}>;
-
-
-export type GetUserAndRecipesQuery = (
-  { __typename?: 'Query' }
-  & { user?: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'createdAt' | 'email' | 'emailVerified' | 'id' | 'image' | 'name' | 'updatedAt'>
-  )>, recipes: Array<(
-    { __typename?: 'Recipe' }
-    & Pick<Recipe, 'id' | 'title'>
-  )> }
-);
-
 export type DeleteOneRecipeMutationVariables = Exact<{
   where: RecipeWhereUniqueInput;
 }>;
@@ -413,53 +401,64 @@ export type DeleteOneRecipeMutation = (
   )> }
 );
 
+export type GetRecipeQueryVariables = Exact<{
+  where: RecipeWhereUniqueInput;
+}>;
 
-export const GetRecipeDocument = gql`
-    query getRecipe($where: RecipeWhereUniqueInput!) {
-  recipe(where: $where) {
-    id
-    userId
-    title
-    text
-  }
+
+export type GetRecipeQuery = (
+  { __typename?: 'Query' }
+  & { recipe?: Maybe<(
+    { __typename?: 'Recipe' }
+    & RecipeFragmentFragment
+  )> }
+);
+
+export type GetUserAndRecipesQueryVariables = Exact<{
+  whereUser: UserWhereUniqueInput;
+  whereRecipes: RecipeWhereInput;
+}>;
+
+
+export type GetUserAndRecipesQuery = (
+  { __typename?: 'Query' }
+  & { user?: Maybe<(
+    { __typename?: 'User' }
+    & UserFragmentFragment
+  )>, recipes: Array<(
+    { __typename?: 'Recipe' }
+    & RecipeFragmentFragment
+  )> }
+);
+
+export const RecipeFragmentFragmentDoc = gql`
+    fragment RecipeFragment on Recipe {
+  id
+  userId
+  title
+  text
+  cookTime
+  description
 }
     `;
-
-/**
- * __useGetRecipeQuery__
- *
- * To run a query within a React component, call `useGetRecipeQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetRecipeQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetRecipeQuery({
- *   variables: {
- *      where: // value for 'where'
- *   },
- * });
- */
-export function useGetRecipeQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetRecipeQuery, GetRecipeQueryVariables>) {
-        return ApolloReactHooks.useQuery<GetRecipeQuery, GetRecipeQueryVariables>(GetRecipeDocument, baseOptions);
-      }
-export function useGetRecipeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetRecipeQuery, GetRecipeQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<GetRecipeQuery, GetRecipeQueryVariables>(GetRecipeDocument, baseOptions);
-        }
-export type GetRecipeQueryHookResult = ReturnType<typeof useGetRecipeQuery>;
-export type GetRecipeLazyQueryHookResult = ReturnType<typeof useGetRecipeLazyQuery>;
-export type GetRecipeQueryResult = ApolloReactCommon.QueryResult<GetRecipeQuery, GetRecipeQueryVariables>;
+export const UserFragmentFragmentDoc = gql`
+    fragment UserFragment on User {
+  createdAt
+  email
+  emailVerified
+  id
+  image
+  name
+  updatedAt
+}
+    `;
 export const UpdateRecipeDocument = gql`
     mutation updateRecipe($data: RecipeUpdateInput!, $where: RecipeWhereUniqueInput!) {
   updateOneRecipe(data: $data, where: $where) {
-    id
-    userId
-    title
-    text
+    ...RecipeFragment
   }
 }
-    `;
+    ${RecipeFragmentFragmentDoc}`;
 export type UpdateRecipeMutationFn = ApolloReactCommon.MutationFunction<UpdateRecipeMutation, UpdateRecipeMutationVariables>;
 
 /**
@@ -518,50 +517,6 @@ export function useCreateOneRecipeMutation(baseOptions?: ApolloReactHooks.Mutati
 export type CreateOneRecipeMutationHookResult = ReturnType<typeof useCreateOneRecipeMutation>;
 export type CreateOneRecipeMutationResult = ApolloReactCommon.MutationResult<CreateOneRecipeMutation>;
 export type CreateOneRecipeMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateOneRecipeMutation, CreateOneRecipeMutationVariables>;
-export const GetUserAndRecipesDocument = gql`
-    query getUserAndRecipes($whereUser: UserWhereUniqueInput!, $whereRecipes: RecipeWhereInput!) {
-  user(where: $whereUser) {
-    createdAt
-    email
-    emailVerified
-    id
-    image
-    name
-    updatedAt
-  }
-  recipes(where: $whereRecipes) {
-    id
-    title
-  }
-}
-    `;
-
-/**
- * __useGetUserAndRecipesQuery__
- *
- * To run a query within a React component, call `useGetUserAndRecipesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUserAndRecipesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetUserAndRecipesQuery({
- *   variables: {
- *      whereUser: // value for 'whereUser'
- *      whereRecipes: // value for 'whereRecipes'
- *   },
- * });
- */
-export function useGetUserAndRecipesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetUserAndRecipesQuery, GetUserAndRecipesQueryVariables>) {
-        return ApolloReactHooks.useQuery<GetUserAndRecipesQuery, GetUserAndRecipesQueryVariables>(GetUserAndRecipesDocument, baseOptions);
-      }
-export function useGetUserAndRecipesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetUserAndRecipesQuery, GetUserAndRecipesQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<GetUserAndRecipesQuery, GetUserAndRecipesQueryVariables>(GetUserAndRecipesDocument, baseOptions);
-        }
-export type GetUserAndRecipesQueryHookResult = ReturnType<typeof useGetUserAndRecipesQuery>;
-export type GetUserAndRecipesLazyQueryHookResult = ReturnType<typeof useGetUserAndRecipesLazyQuery>;
-export type GetUserAndRecipesQueryResult = ApolloReactCommon.QueryResult<GetUserAndRecipesQuery, GetUserAndRecipesQueryVariables>;
 export const DeleteOneRecipeDocument = gql`
     mutation deleteOneRecipe($where: RecipeWhereUniqueInput!) {
   deleteOneRecipe(where: $where) {
@@ -594,3 +549,74 @@ export function useDeleteOneRecipeMutation(baseOptions?: ApolloReactHooks.Mutati
 export type DeleteOneRecipeMutationHookResult = ReturnType<typeof useDeleteOneRecipeMutation>;
 export type DeleteOneRecipeMutationResult = ApolloReactCommon.MutationResult<DeleteOneRecipeMutation>;
 export type DeleteOneRecipeMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteOneRecipeMutation, DeleteOneRecipeMutationVariables>;
+export const GetRecipeDocument = gql`
+    query getRecipe($where: RecipeWhereUniqueInput!) {
+  recipe(where: $where) {
+    ...RecipeFragment
+  }
+}
+    ${RecipeFragmentFragmentDoc}`;
+
+/**
+ * __useGetRecipeQuery__
+ *
+ * To run a query within a React component, call `useGetRecipeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRecipeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRecipeQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGetRecipeQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetRecipeQuery, GetRecipeQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetRecipeQuery, GetRecipeQueryVariables>(GetRecipeDocument, baseOptions);
+      }
+export function useGetRecipeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetRecipeQuery, GetRecipeQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetRecipeQuery, GetRecipeQueryVariables>(GetRecipeDocument, baseOptions);
+        }
+export type GetRecipeQueryHookResult = ReturnType<typeof useGetRecipeQuery>;
+export type GetRecipeLazyQueryHookResult = ReturnType<typeof useGetRecipeLazyQuery>;
+export type GetRecipeQueryResult = ApolloReactCommon.QueryResult<GetRecipeQuery, GetRecipeQueryVariables>;
+export const GetUserAndRecipesDocument = gql`
+    query getUserAndRecipes($whereUser: UserWhereUniqueInput!, $whereRecipes: RecipeWhereInput!) {
+  user(where: $whereUser) {
+    ...UserFragment
+  }
+  recipes(where: $whereRecipes) {
+    ...RecipeFragment
+  }
+}
+    ${UserFragmentFragmentDoc}
+${RecipeFragmentFragmentDoc}`;
+
+/**
+ * __useGetUserAndRecipesQuery__
+ *
+ * To run a query within a React component, call `useGetUserAndRecipesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserAndRecipesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserAndRecipesQuery({
+ *   variables: {
+ *      whereUser: // value for 'whereUser'
+ *      whereRecipes: // value for 'whereRecipes'
+ *   },
+ * });
+ */
+export function useGetUserAndRecipesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetUserAndRecipesQuery, GetUserAndRecipesQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetUserAndRecipesQuery, GetUserAndRecipesQueryVariables>(GetUserAndRecipesDocument, baseOptions);
+      }
+export function useGetUserAndRecipesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetUserAndRecipesQuery, GetUserAndRecipesQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetUserAndRecipesQuery, GetUserAndRecipesQueryVariables>(GetUserAndRecipesDocument, baseOptions);
+        }
+export type GetUserAndRecipesQueryHookResult = ReturnType<typeof useGetUserAndRecipesQuery>;
+export type GetUserAndRecipesLazyQueryHookResult = ReturnType<typeof useGetUserAndRecipesLazyQuery>;
+export type GetUserAndRecipesQueryResult = ApolloReactCommon.QueryResult<GetUserAndRecipesQuery, GetUserAndRecipesQueryVariables>;

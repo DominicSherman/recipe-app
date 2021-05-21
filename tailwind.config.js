@@ -11,12 +11,12 @@ module.exports = {
       },
       backgroundColor: (theme) => ({
         ...theme('colors'),
-        primary: theme('colors.gray.800'),
-        secondary: theme('colors.gray.700'),
-        tertiary: theme('colors.gray.900'),
+        primary: theme('colors.gray.100'),
+        secondary: theme('colors.cyan.200'),
+        tertiary: theme('colors.gray.700'),
       }),
       textColor: (theme) => ({
-        primary: theme('colors.gray.200'),
+        primary: theme('colors.gray.900'),
       }),
     },
   },

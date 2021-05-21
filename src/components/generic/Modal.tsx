@@ -46,7 +46,7 @@ export const Modal = ({ isOpen, setIsOpen, children }) => {
     <div
       aria-labelledby="dialog-1-title"
       aria-modal="true"
-      className={`fixed z-10 inset-0 overflow-y-auto ${
+      className={`fixed z-50 inset-0 overflow-y-auto ${
         hideModal ? 'hidden' : 'block'
       }`}
       role="dialog"
