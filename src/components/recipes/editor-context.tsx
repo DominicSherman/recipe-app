@@ -6,15 +6,25 @@ import { useRouterId } from 'utils';
 import { useRecipe } from './hooks';
 import { convertDraftStateToString, convertStringToDraftState } from './utils';
 
+const defaultEditingFields = {
+  title: '',
+  description: '',
+  cookTime: '',
+  headerImageUrl: '',
+  serveCount: '',
+};
+
 const EditorContext = React.createContext<{
   isEditing: boolean;
   setIsEditing: (v: boolean) => void;
-  editingTitle: string;
-  setEditingTitle: (v: string) => void;
-  editingCookTime: string;
-  setEditingCookTime: (v: string) => void;
-  editingDescription: string;
-  setEditingDescription: (v: string) => void;
+  editingFields: {
+    title: string;
+    description: string;
+    cookTime: string;
+    headerImageUrl: string;
+    serveCount: string;
+  };
+  setEditingField: (key: string, value: string) => void;
   editorState: any;
   setEditorState: (v: any) => void;
   editorRef: any | null;
@@ -28,12 +38,8 @@ const EditorContext = React.createContext<{
 }>({
   isEditing: false,
   setIsEditing: () => ({}),
-  editingTitle: '',
-  setEditingTitle: () => ({}),
-  editingCookTime: '',
-  setEditingCookTime: () => ({}),
-  editingDescription: '',
-  setEditingDescription: () => ({}),
+  editingFields: defaultEditingFields,
+  setEditingField: () => ({}),
   editorState: createEditorStateWithText(''),
   setEditorState: () => ({}),
   editorRef: null,
@@ -49,25 +55,14 @@ const EditorContext = React.createContext<{
 export const EditorProvider = ({ children }) => {
   const [id] = useRouterId();
   const [isEditing, setIsEditing] = useState(false);
-  const [editingTitle, setEditingTitle] = useState('');
-  const [editingDescription, setEditingDescription] = useState('');
-  const [editingCookTime, setEditingCookTime] = useState('');
+  const [editingFields, setEditingFields] = useState(defaultEditingFields);
   const [editorState, setEditorState] = useState(createEditorStateWithText(''));
   const editorRef = useRef<any | null>();
   const editorStateAsString = convertDraftStateToString(editorState);
   const recipe = useRecipe();
   const recipeTextHasChanged = editorStateAsString !== recipe.text;
-  const recipeTitleHasChanged = editingTitle !== recipe.title;
-  const recipeDescriptionhasChanged =
-    editingDescription !== recipe.description && editingDescription !== '';
-  const recipeCookTimeHasChanged =
-    editingCookTime !== recipe.cookTime && editingCookTime !== '';
 
-  const recipeHasChanged =
-    recipeTextHasChanged ||
-    recipeTitleHasChanged ||
-    recipeDescriptionhasChanged ||
-    recipeCookTimeHasChanged;
+  const recipeHasChanged = recipeTextHasChanged;
 
   const [updateRecipe, { loading: saveLoading }] = useUpdateRecipeMutation({
     onError: (error) => {
@@ -130,11 +125,18 @@ export const EditorProvider = ({ children }) => {
     setTimeout(focus, 50);
   };
 
+  const setEditingField = (key: string, value: string) => {
+    setEditingFields({
+      ...editingFields,
+      [key]: value,
+    });
+  };
+
   const value = {
     isEditing,
     setIsEditing,
-    editingTitle,
-    setEditingTitle,
+    editingFields,
+    setEditingField,
     editorState,
     setEditorState,
     editorRef,
@@ -145,10 +147,6 @@ export const EditorProvider = ({ children }) => {
     onSave,
     onEdit,
     recipeHasChanged,
-    editingCookTime,
-    setEditingCookTime,
-    editingDescription,
-    setEditingDescription,
   };
 
   return (
