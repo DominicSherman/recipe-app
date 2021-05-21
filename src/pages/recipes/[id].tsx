@@ -8,8 +8,9 @@ import {
   useEditorPersistence,
   useRecipe,
   EditorProvider,
+  useGlobalKeybindings,
 } from 'components';
-import { useGlobalKeybindings } from 'components/edit-recipe/keybindings';
+import { RecipeInfo } from 'components/recipes/RecipeInfo';
 
 const ViewRecipePage = () => {
   const recipe = useRecipe();
@@ -34,6 +35,7 @@ const ViewRecipePage = () => {
               />
             </div> */}
             <Title />
+            <RecipeInfo />
             <div
               className={`w-full relative p-4 min-h-[500px] ${
                 isEditing ? 'bg-white cursor-text rounded-md' : ''

@@ -31,7 +31,7 @@ export const schema = makeSchema({
     ),
   },
   contextType: {
-    module: path.join(__dirname, './context.ts'),
+    module: path.join(currentDirectory, 'src/graphql/context.ts'),
     export: 'Context',
   },
   prettierConfig,

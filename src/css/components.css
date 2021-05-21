@@ -2,11 +2,11 @@
 @import './components/tooltip.css';
 
 .key {
-  @apply bg-gray-800 rounded-md py-1 px-2 text-xs shadow-lg border border-gray-600 text-white;
+  @apply bg-tertiary rounded-md py-1 px-2 text-xs shadow-lg text-white;
 }
 
 .hr {
-  @apply self-center w-full max-w-lg m-2 h-[2px] bg-gradient-to-r from-green-400 to-blue-700;
+  @apply self-center w-full max-w-lg m-2 h-[2px] bg-gradient-to-r from-blue-700 to-gray-400;
 }
 
 .card {

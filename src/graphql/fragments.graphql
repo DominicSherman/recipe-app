@@ -1,0 +1,18 @@
+fragment RecipeFragment on Recipe {
+  id
+  userId
+  title
+  text
+  cookTime
+  description
+}
+
+fragment UserFragment on User {
+  createdAt
+  email
+  emailVerified
+  id
+  image
+  name
+  updatedAt
+}
