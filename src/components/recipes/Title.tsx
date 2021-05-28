@@ -2,7 +2,7 @@ import { useEditorContext } from './editor-context';
 import { useRecipe } from './hooks';
 
 export const Title = () => {
-  const { isEditing, editingTitle, setEditingTitle } = useEditorContext();
+  const { isEditing, editingFields, setEditingField } = useEditorContext();
   const { title } = useRecipe();
 
   return (
@@ -10,11 +10,11 @@ export const Title = () => {
       {isEditing ? (
         <input
           className="text-5xl text-primary font-extrabold rounded-md flex justify-center w-full h-16 text-center p-2 my-2"
-          onChange={(e) => setEditingTitle(e.target.value)}
-          value={editingTitle}
+          onChange={(e) => setEditingField('title', e.target.value)}
+          value={editingFields.title}
         />
       ) : (
-        <h1 className="text-5xl text-primary h-16 text-center self-center p-2 my-2">
+        <h1 className="text-5xl text-primary h-16 text-center self-center p-2 my-2 font-satisfy">
           {title}
         </h1>
       )}

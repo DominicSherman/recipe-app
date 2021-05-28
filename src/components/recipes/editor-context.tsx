@@ -62,7 +62,13 @@ export const EditorProvider = ({ children }) => {
   const recipe = useRecipe();
   const recipeTextHasChanged = editorStateAsString !== recipe.text;
 
-  const recipeHasChanged = recipeTextHasChanged;
+  let recipeHasChanged = recipeTextHasChanged;
+
+  Object.entries(editingFields).forEach(([key, value]) => {
+    if (value && value !== recipe[key]) {
+      recipeHasChanged = true;
+    }
+  });
 
   const [updateRecipe, { loading: saveLoading }] = useUpdateRecipeMutation({
     onError: (error) => {
@@ -80,24 +86,31 @@ export const EditorProvider = ({ children }) => {
   const focus = () => editorRef.current?.focus();
 
   const onSave = () => {
+    console.log({ recipeHasChanged });
+
     if (recipeHasChanged) {
       window.localStorage.removeItem(`draft-${id}`);
 
-      // console.log({ editingDescription });
-      // const titleProp = editingTitle ? { title: { set: editingTitle } } : {};
-      // const cookTimeProp = editingCookTime
-      //   ? { cookTime: { set: editingCookTime } }
-      //   : {};
-      // const descriptionProp = editingDescription
-      //   ? { description: { set: editingDescription } }
-      //   : {};
+      const updateProps = Object.entries(editingFields).reduce(
+        (prop, [key, value]) => {
+          if (value && value !== recipe[key]) {
+            return {
+              ...prop,
+              [key]: {
+                set: value,
+              },
+            };
+          }
+
+          return prop;
+        },
+        {}
+      );
 
       updateRecipe({
         variables: {
           data: {
-            // ...titleProp,
-            // ...cookTimeProp,
-            // ...descriptionProp,
+            ...updateProps,
             text: {
               set: convertDraftStateToString(editorState),
             },
