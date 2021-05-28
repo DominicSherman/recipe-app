@@ -8,3 +8,4 @@ export * from './EditOrSaveButton';
 export * from './RecipeItem';
 export * from './CreateRecipeButton';
 export * from './CreateRecipeModal';
+export * from './RecipeHeader';

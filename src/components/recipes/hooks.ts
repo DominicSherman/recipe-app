@@ -36,38 +36,17 @@ export const useEditorPersistence = () => {
 };
 
 export const useSetEditingRecipeInfo = () => {
-  const {
-    setEditingTitle,
-    editingTitle,
-    setEditingCookTime,
-    editingCookTime,
-    setEditingDescription,
-    editingDescription,
-  } = useEditorContext();
-  const { cookTime, description, title } = useRecipe();
+  const { editingFields, setEditingField } = useEditorContext();
+  const recipe = useRecipe();
 
   useEffect(() => {
-    if (title && title !== editingTitle) {
-      setEditingTitle(title);
-    }
-
-    if (cookTime && cookTime !== editingCookTime) {
-      setEditingCookTime(cookTime);
-    }
-
-    if (description && description !== editingDescription) {
-      setEditingDescription(description);
-    }
-
+    Object.keys(recipe).forEach((key) => {
+      if (recipe[key] && recipe[key] !== editingFields[key]) {
+        setEditingField(key, recipe[key]);
+      }
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    title,
-    setEditingTitle,
-    cookTime,
-    setEditingCookTime,
-    description,
-    setEditingDescription,
-  ]);
+  }, [recipe, setEditingField]);
 };
 
 export const useRecipe = () => {
@@ -83,6 +62,8 @@ export const useRecipe = () => {
 
   if (!data?.recipe) {
     return {
+      headerImageUrl: null,
+      serveCount: null,
       cookTime: null,
       description: null,
       title: '',

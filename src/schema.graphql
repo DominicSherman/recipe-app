@@ -148,7 +148,9 @@ type Recipe {
   cookTime: String
   createdAt: DateTime!
   description: String
+  headerImageUrl: String
   id: String!
+  serveCount: String
   text: String
   title: String!
   updatedAt: DateTime!
@@ -160,7 +162,9 @@ input RecipeCreateInput {
   cookTime: String
   createdAt: DateTime
   description: String
+  headerImageUrl: String
   id: String
+  serveCount: String
   text: String
   title: String!
   updatedAt: DateTime
@@ -177,7 +181,9 @@ input RecipeUpdateInput {
   cookTime: NullableStringFieldUpdateOperationsInput
   createdAt: DateTimeFieldUpdateOperationsInput
   description: NullableStringFieldUpdateOperationsInput
+  headerImageUrl: NullableStringFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
+  serveCount: NullableStringFieldUpdateOperationsInput
   text: NullableStringFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -191,7 +197,9 @@ input RecipeWhereInput {
   cookTime: StringNullableFilter
   createdAt: DateTimeFilter
   description: StringNullableFilter
+  headerImageUrl: StringNullableFilter
   id: StringFilter
+  serveCount: StringNullableFilter
   text: StringNullableFilter
   title: StringFilter
   updatedAt: DateTimeFilter

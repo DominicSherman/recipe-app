@@ -5,6 +5,8 @@ fragment RecipeFragment on Recipe {
   text
   cookTime
   description
+  serveCount
+  headerImageUrl
 }
 
 fragment UserFragment on User {

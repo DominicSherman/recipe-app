@@ -9,6 +9,7 @@ import {
   useRecipe,
   EditorProvider,
   useGlobalKeybindings,
+  RecipeHeader,
 } from 'components';
 import { RecipeInfo } from 'components/recipes/RecipeInfo';
 
@@ -27,13 +28,7 @@ const ViewRecipePage = () => {
         {recipe ? (
           <div className="relative pt-16 flex flex-col justify-center w-full max-w-3xl">
             <EditOrSaveButton />
-            {/* <div className="w-full h-[300px] md:h-[500px] overflow-hidden">
-              <img
-                alt="recipe"
-                className="w-full h-full object-cover"
-                src="/header-image.jpg"
-              />
-            </div> */}
+            <RecipeHeader />
             <Title />
             <RecipeInfo />
             <div

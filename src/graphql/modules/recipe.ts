@@ -13,6 +13,8 @@ export const Recipe = objectType({
     t.model.updatedAt();
     t.model.cookTime();
     t.model.description();
+    t.model.serveCount();
+    t.model.headerImageUrl();
   },
 });
 

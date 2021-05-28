@@ -189,7 +189,9 @@ export type Recipe = {
   cookTime?: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
+  headerImageUrl?: Maybe<Scalars['String']>;
   id: Scalars['String'];
+  serveCount?: Maybe<Scalars['String']>;
   text?: Maybe<Scalars['String']>;
   title: Scalars['String'];
   updatedAt: Scalars['DateTime'];
@@ -201,7 +203,9 @@ export type RecipeCreateInput = {
   cookTime?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
+  headerImageUrl?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  serveCount?: Maybe<Scalars['String']>;
   text?: Maybe<Scalars['String']>;
   title: Scalars['String'];
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -218,7 +222,9 @@ export type RecipeUpdateInput = {
   cookTime?: Maybe<NullableStringFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   description?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  headerImageUrl?: Maybe<NullableStringFieldUpdateOperationsInput>;
   id?: Maybe<StringFieldUpdateOperationsInput>;
+  serveCount?: Maybe<NullableStringFieldUpdateOperationsInput>;
   text?: Maybe<NullableStringFieldUpdateOperationsInput>;
   title?: Maybe<StringFieldUpdateOperationsInput>;
   updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
@@ -232,7 +238,9 @@ export type RecipeWhereInput = {
   cookTime?: Maybe<StringNullableFilter>;
   createdAt?: Maybe<DateTimeFilter>;
   description?: Maybe<StringNullableFilter>;
+  headerImageUrl?: Maybe<StringNullableFilter>;
   id?: Maybe<StringFilter>;
+  serveCount?: Maybe<StringNullableFilter>;
   text?: Maybe<StringNullableFilter>;
   title?: Maybe<StringFilter>;
   updatedAt?: Maybe<DateTimeFilter>;
@@ -353,7 +361,7 @@ export type UserWhereUniqueInput = {
 
 export type RecipeFragmentFragment = (
   { __typename?: 'Recipe' }
-  & Pick<Recipe, 'id' | 'userId' | 'title' | 'text' | 'cookTime' | 'description'>
+  & Pick<Recipe, 'id' | 'userId' | 'title' | 'text' | 'cookTime' | 'description' | 'serveCount' | 'headerImageUrl'>
 );
 
 export type UserFragmentFragment = (
@@ -439,6 +447,8 @@ export const RecipeFragmentFragmentDoc = gql`
   text
   cookTime
   description
+  serveCount
+  headerImageUrl
 }
     `;
 export const UserFragmentFragmentDoc = gql`
