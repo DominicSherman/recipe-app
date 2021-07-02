@@ -36,17 +36,21 @@ export const useEditorPersistence = () => {
 };
 
 export const useSetEditingRecipeInfo = () => {
-  const { editingFields, setEditingField } = useEditorContext();
+  const { editingFields, setEditingFields } = useEditorContext();
   const recipe = useRecipe();
 
   useEffect(() => {
-    Object.keys(recipe).forEach((key) => {
-      if (recipe[key] && recipe[key] !== editingFields[key]) {
-        setEditingField(key, recipe[key]);
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [recipe, setEditingField]);
+    if (editingFields.shouldSet) {
+      setEditingFields({
+        shouldSet: false,
+        title: recipe.title || '',
+        description: recipe.description || '',
+        cookTime: recipe.cookTime || '',
+        headerImageUrl: recipe.headerImageUrl || '',
+        serveCount: recipe.serveCount || '',
+      });
+    }
+  }, [editingFields.shouldSet, recipe, setEditingFields]);
 };
 
 export const useRecipe = () => {

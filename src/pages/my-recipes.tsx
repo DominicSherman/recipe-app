@@ -1,5 +1,5 @@
 import { CreateRecipeButton, Page, RecipeItem } from 'components';
-import { useGetUserAndRecipesQuery } from 'graphql-codegen';
+import { SortOrder, useGetUserAndRecipesQuery } from 'graphql-codegen';
 import { useUserId } from 'utils';
 
 export default function MyRecipes() {
@@ -8,6 +8,9 @@ export default function MyRecipes() {
   const { data } = useGetUserAndRecipesQuery({
     skip: !userId,
     variables: {
+      orderBy: {
+        updatedAt: SortOrder.DESC,
+      },
       whereRecipes: {
         userId: {
           equals: Number(userId),
@@ -29,9 +32,9 @@ export default function MyRecipes() {
       <div className="flex flex-col justify-center items-center w-full">
         <h1>My Recipes</h1>
         <div className="hr" />
-        <div className="max-w-xl grid grid-flow-row grid-cols-3">
+        <div className="max-w-xl">
           {data?.recipes.map((recipe) => (
-            <RecipeItem id={recipe.id} />
+            <RecipeItem recipe={recipe} />
           ))}
         </div>
       </div>

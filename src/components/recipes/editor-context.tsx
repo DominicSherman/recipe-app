@@ -2,11 +2,12 @@ import { createEditorStateWithText } from '@draft-js-plugins/editor';
 import { useUpdateRecipeMutation } from 'graphql-codegen';
 import React, { useContext, useState } from 'react';
 import { useRef } from 'react';
-import { useRouterId } from 'utils';
+import { useRouterId, useUserId } from 'utils';
 import { useRecipe } from './hooks';
 import { convertDraftStateToString, convertStringToDraftState } from './utils';
 
 const defaultEditingFields = {
+  shouldSet: true,
   title: '',
   description: '',
   cookTime: '',
@@ -18,6 +19,7 @@ const EditorContext = React.createContext<{
   isEditing: boolean;
   setIsEditing: (v: boolean) => void;
   editingFields: {
+    shouldSet: boolean;
     title: string;
     description: string;
     cookTime: string;
@@ -25,6 +27,7 @@ const EditorContext = React.createContext<{
     serveCount: string;
   };
   setEditingField: (key: string, value: string) => void;
+  setEditingFields: (value: any) => void;
   editorState: any;
   setEditorState: (v: any) => void;
   editorRef: any | null;
@@ -40,6 +43,7 @@ const EditorContext = React.createContext<{
   setIsEditing: () => ({}),
   editingFields: defaultEditingFields,
   setEditingField: () => ({}),
+  setEditingFields: () => ({}),
   editorState: createEditorStateWithText(''),
   setEditorState: () => ({}),
   editorRef: null,
@@ -54,12 +58,14 @@ const EditorContext = React.createContext<{
 
 export const EditorProvider = ({ children }) => {
   const [id] = useRouterId();
+  const userId = useUserId();
   const [isEditing, setIsEditing] = useState(false);
   const [editingFields, setEditingFields] = useState(defaultEditingFields);
   const [editorState, setEditorState] = useState(createEditorStateWithText(''));
   const editorRef = useRef<any | null>();
   const editorStateAsString = convertDraftStateToString(editorState);
   const recipe = useRecipe();
+  const userOwnsRecipe = String(recipe.userId) === String(userId);
   const recipeTextHasChanged = editorStateAsString !== recipe.text;
 
   let recipeHasChanged = recipeTextHasChanged;
@@ -86,14 +92,14 @@ export const EditorProvider = ({ children }) => {
   const focus = () => editorRef.current?.focus();
 
   const onSave = () => {
-    console.log({ recipeHasChanged });
-
     if (recipeHasChanged) {
       window.localStorage.removeItem(`draft-${id}`);
 
+      console.log({ editingFields });
+
       const updateProps = Object.entries(editingFields).reduce(
         (prop, [key, value]) => {
-          if (value && value !== recipe[key]) {
+          if (value && value !== recipe[key] && key !== '__typename') {
             return {
               ...prop,
               [key]: {
@@ -130,12 +136,14 @@ export const EditorProvider = ({ children }) => {
   };
 
   const onEdit = () => {
-    if (recipe.text) {
-      setEditorState(convertStringToDraftState(recipe.text));
-    }
+    if (userOwnsRecipe) {
+      if (recipe.text) {
+        setEditorState(convertStringToDraftState(recipe.text));
+      }
 
-    setIsEditing(true);
-    setTimeout(focus, 50);
+      setIsEditing(true);
+      setTimeout(focus, 50);
+    }
   };
 
   const setEditingField = (key: string, value: string) => {
@@ -150,6 +158,7 @@ export const EditorProvider = ({ children }) => {
     setIsEditing,
     editingFields,
     setEditingField,
+    setEditingFields,
     editorState,
     setEditorState,
     editorRef,

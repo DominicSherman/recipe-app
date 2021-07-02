@@ -7,11 +7,12 @@ query getRecipe($where: RecipeWhereUniqueInput!) {
 query getUserAndRecipes(
     $whereUser: UserWhereUniqueInput!
     $whereRecipes: RecipeWhereInput!
+    $orderBy: [RecipeOrderByInput!]
 ) {
   user(where: $whereUser) {
     ...UserFragment
   }
-  recipes(where: $whereRecipes) {
+  recipes(where: $whereRecipes, orderBy: $orderBy) {
     ...RecipeFragment
   }
 }
