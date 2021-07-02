@@ -4,6 +4,8 @@ export enum Env {
   PROD = 'production',
 }
 
-export const getEnv = (): Env => (process.env.VERCEL_ENV as Env) || Env.DEV;
+export const getEnv = (): Env => {
+  return (process.env.NEXT_PUBLIC_VERCEL_ENV as Env) || Env.DEV;
+};
 
 export const isProduction = (): boolean => getEnv() === Env.PROD;
