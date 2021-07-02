@@ -5,9 +5,9 @@ export enum Env {
 }
 
 export const getEnv = (): Env => {
-  console.log({ foo: process.env.VERCEL_ENV });
+  console.log({ env: process.env.NEXT_PUBLIC_VERCEL_ENV });
 
-  return (process.env.VERCEL_ENV as Env) || Env.DEV;
+  return (process.env.NEXT_PUBLIC_VERCEL_ENV as Env) || Env.DEV;
 };
 
 export const isProduction = (): boolean => getEnv() === Env.PROD;
