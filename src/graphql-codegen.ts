@@ -162,6 +162,7 @@ export type QueryRecipesArgs = {
   before?: Maybe<RecipeWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<Array<RecipeOrderByInput>>;
   where?: Maybe<RecipeWhereInput>;
 };
 
@@ -218,6 +219,20 @@ export type RecipeListRelationFilter = {
   some?: Maybe<RecipeWhereInput>;
 };
 
+export type RecipeOrderByInput = {
+  cookTime?: Maybe<SortOrder>;
+  createdAt?: Maybe<SortOrder>;
+  description?: Maybe<SortOrder>;
+  headerImageUrl?: Maybe<SortOrder>;
+  id?: Maybe<SortOrder>;
+  serveCount?: Maybe<SortOrder>;
+  text?: Maybe<SortOrder>;
+  title?: Maybe<SortOrder>;
+  updatedAt?: Maybe<SortOrder>;
+  user?: Maybe<UserOrderByInput>;
+  userId?: Maybe<SortOrder>;
+};
+
 export type RecipeUpdateInput = {
   cookTime?: Maybe<NullableStringFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
@@ -251,6 +266,11 @@ export type RecipeWhereInput = {
 export type RecipeWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
 };
+
+export enum SortOrder {
+  ASC = 'asc',
+  DESC = 'desc'
+}
 
 export type StringFieldUpdateOperationsInput = {
   set?: Maybe<Scalars['String']>;
@@ -316,6 +336,16 @@ export type UserCreateWithoutRecipesInput = {
   image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type UserOrderByInput = {
+  createdAt?: Maybe<SortOrder>;
+  email?: Maybe<SortOrder>;
+  emailVerified?: Maybe<SortOrder>;
+  id?: Maybe<SortOrder>;
+  image?: Maybe<SortOrder>;
+  name?: Maybe<SortOrder>;
+  updatedAt?: Maybe<SortOrder>;
 };
 
 export type UserUpdateOneRequiredWithoutRecipesInput = {
@@ -425,6 +455,7 @@ export type GetRecipeQuery = (
 export type GetUserAndRecipesQueryVariables = Exact<{
   whereUser: UserWhereUniqueInput;
   whereRecipes: RecipeWhereInput;
+  orderBy?: Maybe<Array<RecipeOrderByInput> | RecipeOrderByInput>;
 }>;
 
 
@@ -593,11 +624,11 @@ export type GetRecipeQueryHookResult = ReturnType<typeof useGetRecipeQuery>;
 export type GetRecipeLazyQueryHookResult = ReturnType<typeof useGetRecipeLazyQuery>;
 export type GetRecipeQueryResult = ApolloReactCommon.QueryResult<GetRecipeQuery, GetRecipeQueryVariables>;
 export const GetUserAndRecipesDocument = gql`
-    query getUserAndRecipes($whereUser: UserWhereUniqueInput!, $whereRecipes: RecipeWhereInput!) {
+    query getUserAndRecipes($whereUser: UserWhereUniqueInput!, $whereRecipes: RecipeWhereInput!, $orderBy: [RecipeOrderByInput!]) {
   user(where: $whereUser) {
     ...UserFragment
   }
-  recipes(where: $whereRecipes) {
+  recipes(where: $whereRecipes, orderBy: $orderBy) {
     ...RecipeFragment
   }
 }
@@ -618,6 +649,7 @@ ${RecipeFragmentFragmentDoc}`;
  *   variables: {
  *      whereUser: // value for 'whereUser'
  *      whereRecipes: // value for 'whereRecipes'
+ *      orderBy: // value for 'orderBy'
  *   },
  * });
  */

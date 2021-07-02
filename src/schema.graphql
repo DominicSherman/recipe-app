@@ -125,6 +125,7 @@ type Query {
     before: RecipeWhereUniqueInput
     first: Int
     last: Int
+    orderBy: [RecipeOrderByInput!]
     where: RecipeWhereInput
   ): [Recipe!]!
   user(where: UserWhereUniqueInput!): User
@@ -177,6 +178,20 @@ input RecipeListRelationFilter {
   some: RecipeWhereInput
 }
 
+input RecipeOrderByInput {
+  cookTime: SortOrder
+  createdAt: SortOrder
+  description: SortOrder
+  headerImageUrl: SortOrder
+  id: SortOrder
+  serveCount: SortOrder
+  text: SortOrder
+  title: SortOrder
+  updatedAt: SortOrder
+  user: UserOrderByInput
+  userId: SortOrder
+}
+
 input RecipeUpdateInput {
   cookTime: NullableStringFieldUpdateOperationsInput
   createdAt: DateTimeFieldUpdateOperationsInput
@@ -209,6 +224,11 @@ input RecipeWhereInput {
 
 input RecipeWhereUniqueInput {
   id: String
+}
+
+enum SortOrder {
+  asc
+  desc
 }
 
 input StringFieldUpdateOperationsInput {
@@ -276,6 +296,16 @@ input UserCreateWithoutRecipesInput {
   image: String
   name: String
   updatedAt: DateTime
+}
+
+input UserOrderByInput {
+  createdAt: SortOrder
+  email: SortOrder
+  emailVerified: SortOrder
+  id: SortOrder
+  image: SortOrder
+  name: SortOrder
+  updatedAt: SortOrder
 }
 
 input UserUpdateOneRequiredWithoutRecipesInput {

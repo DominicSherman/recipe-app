@@ -86,8 +86,6 @@ export const EditorProvider = ({ children }) => {
   const focus = () => editorRef.current?.focus();
 
   const onSave = () => {
-    console.log({ recipeHasChanged });
-
     if (recipeHasChanged) {
       window.localStorage.removeItem(`draft-${id}`);
 

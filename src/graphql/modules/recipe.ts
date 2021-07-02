@@ -1,3 +1,7 @@
+import {
+  deleteRecipeIndex,
+  indexRecipe,
+} from './../../services/algolia-service';
 import { objectType, extendType } from 'nexus';
 
 export const Recipe = objectType({
@@ -24,6 +28,7 @@ export const recipeQueries = extendType({
     t.crud.recipe();
     t.crud.recipes({
       filtering: true,
+      ordering: true,
     });
   },
 });
@@ -31,8 +36,52 @@ export const recipeQueries = extendType({
 export const recipeMutations = extendType({
   type: 'Mutation',
   definition(t) {
-    t.crud.createOneRecipe();
-    t.crud.updateOneRecipe();
-    t.crud.deleteOneRecipe();
+    t.crud.createOneRecipe({
+      resolve: async (root, args, ctx, info, originalResolve) => {
+        const res = await originalResolve(root, args, ctx, info);
+
+        if (res) {
+          try {
+            await indexRecipe(res);
+          } catch (error) {
+            console.log({ error });
+          }
+        }
+
+        return res;
+      },
+    });
+
+    t.crud.updateOneRecipe({
+      resolve: async (root, args, ctx, info, originalResolve) => {
+        const res = await originalResolve(root, args, ctx, info);
+
+        if (res) {
+          try {
+            await indexRecipe(res);
+          } catch (error) {
+            console.log({ error });
+          }
+        }
+
+        return res;
+      },
+    });
+
+    t.crud.deleteOneRecipe({
+      resolve: async (root, args, ctx, info, originalResolve) => {
+        const res = await originalResolve(root, args, ctx, info);
+
+        if (res) {
+          try {
+            await deleteRecipeIndex(res.id);
+          } catch (error) {
+            console.log({ error });
+          }
+        }
+
+        return res;
+      },
+    });
   },
 });

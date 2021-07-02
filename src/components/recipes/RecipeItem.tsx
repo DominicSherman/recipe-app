@@ -1,4 +1,4 @@
-import { useGetRecipeQuery } from 'graphql-codegen';
+import { useDeleteOneRecipeMutation, useGetRecipeQuery } from 'graphql-codegen';
 import Link from 'next/link';
 
 export const RecipeItem = ({ id }: { id: string }) => {
@@ -10,27 +10,26 @@ export const RecipeItem = ({ id }: { id: string }) => {
     },
   });
   const recipe = queryData?.data?.recipe;
-  // const [deleteRecipe] = useDeleteOneRecipeMutation({
-  //   variables: {
-  //     where: {
-  //       id,
-  //     },
-  //   },
-  // });
+  const [deleteRecipe] = useDeleteOneRecipeMutation({
+    variables: {
+      where: {
+        id,
+      },
+    },
+  });
 
   if (!recipe) {
     return null;
   }
 
   return (
-    <Link href={`recipes/${id}`}>
-      <a>
-        <div className="relative w-[150px] h-[100px] p-4 m-2 flex flex-col items-center justify-center rounded-lg shadow-md bg-tertiary filter overflow-hidden">
+    <div className="relative w-full h-[100px] p-4 m-2 flex flex-row items-center justify-between rounded-lg shadow-md bg-tertiary filter overflow-hidden">
+      <Link href={`recipes/${id}`}>
+        <a>
           <h3 className="text-white z-10">{recipe.title}</h3>
-        </div>
-      </a>
-    </Link>
-    /* <button className="btn-secondary" onClick={() => deleteRecipe()}>
+        </a>
+      </Link>
+      <button className="btn-secondary" onClick={() => deleteRecipe()}>
         <svg
           className="h-6 w-6"
           fill="none"
@@ -45,6 +44,7 @@ export const RecipeItem = ({ id }: { id: string }) => {
             strokeWidth={2}
           />
         </svg>
-      </button> */
+      </button>
+    </div>
   );
 };
