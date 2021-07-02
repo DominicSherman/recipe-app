@@ -65,7 +65,6 @@ export const EditorProvider = ({ children }) => {
   const editorRef = useRef<any | null>();
   const editorStateAsString = convertDraftStateToString(editorState);
   const recipe = useRecipe();
-  console.log({ userId, recipe });
   const userOwnsRecipe = String(recipe.userId) === String(userId);
   const recipeTextHasChanged = editorStateAsString !== recipe.text;
 
