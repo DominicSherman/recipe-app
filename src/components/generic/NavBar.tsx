@@ -27,6 +27,11 @@ export const NavBar = () => {
                     <p className="mr-4">Home</p>
                   </a>
                 </Link>
+                <Link href="/search">
+                  <a>
+                    <p className="mr-4">Search</p>
+                  </a>
+                </Link>
                 {session ? (
                   <Link href="/my-recipes">
                     <a>

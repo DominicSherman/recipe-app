@@ -41,7 +41,11 @@ export const useSetEditingRecipeInfo = () => {
 
   useEffect(() => {
     Object.keys(recipe).forEach((key) => {
-      if (recipe[key] && recipe[key] !== editingFields[key]) {
+      if (
+        recipe[key] &&
+        recipe[key] !== editingFields[key] &&
+        !editingFields[key]
+      ) {
         setEditingField(key, recipe[key]);
       }
     });

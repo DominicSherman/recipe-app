@@ -22,8 +22,6 @@ export default function MyRecipes() {
     },
   });
 
-  console.log({ data });
-
   return (
     <Page>
       <div className="w-full">
@@ -36,7 +34,7 @@ export default function MyRecipes() {
         <div className="hr" />
         <div className="max-w-xl">
           {data?.recipes.map((recipe) => (
-            <RecipeItem id={recipe.id} />
+            <RecipeItem recipe={recipe} />
           ))}
         </div>
       </div>

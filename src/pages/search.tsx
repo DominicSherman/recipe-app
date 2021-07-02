@@ -1,4 +1,4 @@
-import { Page } from 'components';
+import { Page, RecipeItem } from 'components';
 import React from 'react';
 import { InstantSearch, SearchBox, Hits } from 'react-instantsearch-dom';
 import { getRecipesIndex, searchClient } from 'services/algolia-service';
@@ -8,7 +8,11 @@ export default function Search() {
     <Page>
       <InstantSearch indexName={getRecipesIndex()} searchClient={searchClient}>
         <SearchBox />
-        <Hits />
+        <Hits
+          hitComponent={({ hit }) => (
+            <RecipeItem recipe={{ id: hit.objectId, ...hit }} />
+          )}
+        />
       </InstantSearch>
     </Page>
   );

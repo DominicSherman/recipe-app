@@ -62,6 +62,8 @@ export const EditorProvider = ({ children }) => {
   const recipe = useRecipe();
   const recipeTextHasChanged = editorStateAsString !== recipe.text;
 
+  console.log({ editingFields });
+
   let recipeHasChanged = recipeTextHasChanged;
 
   Object.entries(editingFields).forEach(([key, value]) => {
@@ -137,6 +139,7 @@ export const EditorProvider = ({ children }) => {
   };
 
   const setEditingField = (key: string, value: string) => {
+    console.log({ key, value });
     setEditingFields({
       ...editingFields,
       [key]: value,

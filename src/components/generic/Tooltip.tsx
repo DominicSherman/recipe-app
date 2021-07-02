@@ -4,6 +4,7 @@ import {
   motion,
   AnimationOptions,
 } from 'framer-motion';
+import { useRef } from 'react';
 import { useState, useEffect, useCallback } from 'react';
 
 interface ITooltipProps {
@@ -16,6 +17,9 @@ export const Tooltip = ({ children, HoverItem, enabled }: ITooltipProps) => {
   const [isHovering, setIsHovering] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const scale = useMotionValue(0);
+  const isHoveringRef = useRef(isHovering);
+
+  isHoveringRef.current = isHovering;
 
   const animationConfig: AnimationOptions<number> = {
     duration: 0.2,
@@ -23,13 +27,13 @@ export const Tooltip = ({ children, HoverItem, enabled }: ITooltipProps) => {
   };
 
   const handleShowTooltip = useCallback(() => {
-    if (isHovering && enabled) {
+    if (isHoveringRef.current && enabled) {
       setShowTooltip(true);
     }
-  }, [isHovering, enabled]);
+  }, [isHoveringRef, enabled]);
 
   useEffect(() => {
-    if (isHovering) {
+    if (isHoveringRef.current) {
       setTimeout(handleShowTooltip, 500);
     } else {
       setShowTooltip(false);
