@@ -1,4 +1,5 @@
 import algoliasearch from 'algoliasearch';
+import algoliasearchlite from 'algoliasearch/lite';
 
 import { isProduction } from '../env';
 import { Recipe } from '../graphql-codegen';
@@ -6,7 +7,7 @@ import { Recipe } from '../graphql-codegen';
 const DEV_RECIPES_INDEX = 'dev_recipeapp_recipes';
 const PROD_RECIPES_INDEX = 'prod_recipeapp_recipes';
 
-const getRecipesIndex = () =>
+export const getRecipesIndex = () =>
   isProduction() ? PROD_RECIPES_INDEX : DEV_RECIPES_INDEX;
 
 const adminClient = algoliasearch(
@@ -15,6 +16,11 @@ const adminClient = algoliasearch(
 );
 
 const recipesIndex = adminClient.initIndex(getRecipesIndex());
+
+export const searchClient = algoliasearchlite(
+  process.env.ALGOLIA_APPLICATION_ID || '',
+  process.env.ALGOLIA_SEARCH_API_KEY || ''
+);
 
 export const indexRecipe = (recipe: Omit<Recipe, 'user'>) => {
   return recipesIndex.saveObject({
