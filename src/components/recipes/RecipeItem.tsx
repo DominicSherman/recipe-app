@@ -15,8 +15,6 @@ export const RecipeItem = ({ recipe }: { recipe: RecipeFragmentFragment }) => {
     },
   });
 
-  console.log({ userId, recipeUserId: recipe.userId });
-
   return (
     <div className="relative w-full h-[100px] p-4 m-2 flex flex-row items-center justify-between rounded-lg shadow-md bg-tertiary filter overflow-hidden">
       <Link href={`recipes/${recipe.id}`}>

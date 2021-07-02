@@ -10,7 +10,7 @@ export default function Search() {
         <SearchBox />
         <Hits
           hitComponent={({ hit }) => (
-            <RecipeItem recipe={{ id: hit.objectId, ...hit }} />
+            <RecipeItem recipe={{ id: hit.objectID, ...hit }} />
           )}
         />
       </InstantSearch>
