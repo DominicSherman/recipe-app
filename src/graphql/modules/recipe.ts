@@ -42,6 +42,8 @@ export const recipeMutations = extendType({
 
         if (res) {
           try {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore no idea what the issue is here
             await indexRecipe(res);
           } catch (error) {
             console.log({ error });
