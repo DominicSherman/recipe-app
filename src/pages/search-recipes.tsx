@@ -3,7 +3,7 @@ import React from 'react';
 import { InstantSearch, SearchBox, Hits } from 'react-instantsearch-dom';
 import { getRecipesIndex, searchClient } from 'services/algolia-service';
 
-export default function Search() {
+export default function SearchRecipes() {
   return (
     <Page>
       <InstantSearch indexName={getRecipesIndex()} searchClient={searchClient}>

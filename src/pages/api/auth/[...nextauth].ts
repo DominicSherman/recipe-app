@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
 import Adapters from 'next-auth/adapters';
 import { PrismaClient } from '@prisma/client';
+import { indexUser } from 'services/algolia-service';
 
 const prisma = new PrismaClient();
 
@@ -30,6 +31,11 @@ export default NextAuth({
       }
 
       return token;
+    },
+    async signIn(user) {
+      await indexUser(user);
+
+      return true;
     },
   },
   secret: process.env.AUTH_SECRET,
