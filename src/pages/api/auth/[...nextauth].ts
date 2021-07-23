@@ -32,7 +32,7 @@ export default NextAuth({
 
       return token;
     },
-    async signIn(user, account, profile) {
+    async signIn(user) {
       await indexUser(user);
 
       return true;
