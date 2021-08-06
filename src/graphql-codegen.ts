@@ -10,6 +10,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: any;
 };
 
@@ -148,7 +149,6 @@ export type Query = {
   recipe?: Maybe<Recipe>;
   recipes: Array<Recipe>;
   user?: Maybe<User>;
-  users: Array<User>;
 };
 
 
@@ -158,10 +158,6 @@ export type QueryRecipeArgs = {
 
 
 export type QueryRecipesArgs = {
-  after?: Maybe<RecipeWhereUniqueInput>;
-  before?: Maybe<RecipeWhereUniqueInput>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<RecipeOrderByInput>>;
   where?: Maybe<RecipeWhereInput>;
 };
@@ -171,27 +167,19 @@ export type QueryUserArgs = {
   where: UserWhereUniqueInput;
 };
 
-
-export type QueryUsersArgs = {
-  after?: Maybe<UserWhereUniqueInput>;
-  before?: Maybe<UserWhereUniqueInput>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
 export enum QueryMode {
   DEFAULT = 'default',
   INSENSITIVE = 'insensitive'
 }
 
-/** A Recipe */
+/** A single recipe */
 export type Recipe = {
   __typename?: 'Recipe';
   cookTime?: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
   headerImageUrl?: Maybe<Scalars['String']>;
-  id: Scalars['String'];
+  id: Scalars['ID'];
   serveCount?: Maybe<Scalars['String']>;
   text?: Maybe<Scalars['String']>;
   title: Scalars['String'];
@@ -210,7 +198,7 @@ export type RecipeCreateInput = {
   text?: Maybe<Scalars['String']>;
   title: Scalars['String'];
   updatedAt?: Maybe<Scalars['DateTime']>;
-  user: UserCreateNestedOneWithoutRecipesInput;
+  userId: Scalars['Int'];
 };
 
 export type RecipeListRelationFilter = {
@@ -229,7 +217,6 @@ export type RecipeOrderByInput = {
   text?: Maybe<SortOrder>;
   title?: Maybe<SortOrder>;
   updatedAt?: Maybe<SortOrder>;
-  user?: Maybe<UserOrderByInput>;
   userId?: Maybe<SortOrder>;
 };
 
@@ -243,7 +230,6 @@ export type RecipeUpdateInput = {
   text?: Maybe<NullableStringFieldUpdateOperationsInput>;
   title?: Maybe<StringFieldUpdateOperationsInput>;
   updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutRecipesInput>;
 };
 
 export type RecipeWhereInput = {
@@ -259,7 +245,6 @@ export type RecipeWhereInput = {
   text?: Maybe<StringNullableFilter>;
   title?: Maybe<StringFilter>;
   updatedAt?: Maybe<DateTimeFilter>;
-  user?: Maybe<UserWhereInput>;
   userId?: Maybe<IntFilter>;
 };
 
@@ -306,9 +291,10 @@ export type StringNullableFilter = {
   startsWith?: Maybe<Scalars['String']>;
 };
 
-/** A User */
+/** Track an authenticated user */
 export type User = {
   __typename?: 'User';
+  Recipes: Array<Recipe>;
   createdAt: Scalars['DateTime'];
   email?: Maybe<Scalars['String']>;
   emailVerified?: Maybe<Scalars['DateTime']>;

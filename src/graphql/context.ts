@@ -8,7 +8,6 @@ import { prisma } from '../lib/prisma';
 /**
  * Populates a context object for use in resolvers.
  * If there is a valid auth token in the authorization header, it will add the user to the context
- * @param context context from apollo server
  */
 export async function createContext(
   context: ApolloApiContext
@@ -19,7 +18,6 @@ export async function createContext(
   });
 
   return {
-    db: prisma,
     prisma,
     token,
   };
@@ -27,10 +25,7 @@ export async function createContext(
 
 type ApolloApiContext = ApolloContext<{ req: IncomingMessage }>;
 
-// interface Token {}
-
 export type Context = {
-  db: PrismaClient;
   prisma: PrismaClient;
   token: any;
 };
