@@ -2,6 +2,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator nexusPrisma {
+  provider = "nexus-prisma"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -39,6 +43,7 @@ model Session {
   @@map(name: "sessions")
 }
 
+/// Track an authenticated user
 model User {
   id            Int       @id @default(autoincrement())
   name          String?
@@ -64,6 +69,7 @@ model VerificationRequest {
   @@map(name: "verification_requests")
 }
 
+/// A single recipe
 model Recipe {
   id             String   @id @default(uuid())
   userId         Int      @map(name: "user_id")

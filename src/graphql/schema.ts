@@ -1,7 +1,6 @@
 import path from 'path';
 
 import { fieldAuthorizePlugin, makeSchema } from 'nexus';
-import { nexusPrisma } from 'nexus-plugin-prisma';
 
 import prettierConfig from '../../.prettierrc.js';
 
@@ -11,18 +10,7 @@ const currentDirectory = process.cwd();
 
 export const schema = makeSchema({
   types,
-  plugins: [
-    fieldAuthorizePlugin(),
-    nexusPrisma({
-      experimentalCRUD: true,
-      outputs: {
-        typegen: path.join(
-          currentDirectory,
-          'node_modules/@types/typegen-nexus-plugin-prisma/index.d.ts'
-        ),
-      },
-    }),
-  ],
+  plugins: [fieldAuthorizePlugin()],
   outputs: {
     schema: path.join(currentDirectory, 'src/schema.graphql'),
     typegen: path.join(
