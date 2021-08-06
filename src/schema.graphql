@@ -159,6 +159,7 @@ input RecipeCreateInput {
   text: String
   title: String!
   updatedAt: DateTime
+  userId: Int!
 }
 
 input RecipeListRelationFilter {

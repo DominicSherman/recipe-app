@@ -198,6 +198,7 @@ export type RecipeCreateInput = {
   text?: Maybe<Scalars['String']>;
   title: Scalars['String'];
   updatedAt?: Maybe<Scalars['DateTime']>;
+  userId: Scalars['Int'];
 };
 
 export type RecipeListRelationFilter = {

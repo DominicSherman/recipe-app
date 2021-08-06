@@ -33,11 +33,7 @@ export const CreateRecipeModal = ({ isOpen, setIsOpen }) => {
         data: {
           id: v4(),
           title: data.title,
-          user: {
-            connect: {
-              id: Number(userId),
-            },
-          },
+          userId: Number(userId),
         },
       },
     })

@@ -280,6 +280,7 @@ export const RecipeCreateInput = inputObjectType({
     t.string('text');
     t.nonNull.string('title');
     t.field('updatedAt', { type: DateTime });
+    t.nonNull.int('userId');
   },
 });
 export const RecipeListRelationFilter = inputObjectType({
