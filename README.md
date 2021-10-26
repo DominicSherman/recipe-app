@@ -6,9 +6,9 @@ Basic template for new applications.
 
 Our base branch is `development`, which deploys to dev on merge. Our production branch is `production`, which deploys to production on merge.
 
-To deploy, simply kick off the [deploy workflow](https://github.com/DominicSherman/recipe-app/actions/workflows/deploy.yml).
+To deploy, simply kick off the [deploy workflow](https://github.com/echobind/recipe-app/actions/workflows/deploy.yml).
 
-To see what changes are currently in dev and have not been deployed, [compare development and production](https://github.com/Be-The-Chameleon/next-template/compare/production...development).
+To see what changes are currently in dev and have not been deployed, [compare development and production](https://github.com/echobind/recipe-app/compare/production...development).
 
 ### Tech stack
 
